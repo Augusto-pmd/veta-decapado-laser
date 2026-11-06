@@ -118,8 +118,9 @@ header .btn{padding:11px 18px;font-size:15px}
 
 /* Comparación de métodos */
 #metodo{background:var(--green-soft)}
-.cmp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
-@media (max-width:980px){.cmp{grid-template-columns:1fr}}
+.cmp{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:24px;align-items:start}
+@media (max-width:1080px){.cmp{grid-template-columns:1fr}}
+table.facts{min-width:560px}
 .cmp-card{background:var(--card);border-radius:var(--r);padding:clamp(16px,2.5vw,24px)}
 .tabs{display:inline-flex;background:var(--green-soft);border-radius:999px;padding:4px;margin-bottom:16px}
 .tabs button{border:0;background:transparent;padding:11px 20px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;color:var(--green)}
@@ -136,6 +137,9 @@ header .btn{padding:11px 18px;font-size:15px}
 .xsec .soak{opacity:0}.m-quim .soak{opacity:.45}
 .xsec .dust,.xsec .gooblob,.xsec .beamline,.xsec .bracket{opacity:0}
 .m-lija .dust,.m-lija .bracket{opacity:1}.m-quim .gooblob{opacity:1}.m-laser .beamline{opacity:1}
+.m-arena .layer{transform:scaleY(0)}.m-arena .lost{opacity:0}
+.xsec .rough,.xsec .sand{opacity:0}
+.m-arena .rough,.m-arena .sand,.m-arena .bracket{opacity:1}
 .xcap{margin-top:12px;font-size:15px;color:var(--mute);min-height:3.2em}
 .xcap b{color:var(--ink)}
 .tbl{overflow-x:auto;background:var(--card);border-radius:var(--r);padding:8px 16px}
@@ -309,11 +313,12 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
 
   <section id="metodo">
     <div class="wrap">
-      <div class="head"><h2 class="disp">Tres formas de sacar pintura</h2><p>Corte de una tabla con tres manos de pintura. Elegí un método y mirá qué le pasa a la madera.</p></div>
+      <div class="head"><h2 class="disp">Cuatro formas de sacar pintura</h2><p>Corte de una tabla con tres manos de pintura. Elegí un método y mirá qué le pasa a la madera.</p></div>
       <div class="cmp">
         <div class="cmp-card">
           <div class="tabs" role="group" aria-label="Método">
             <button type="button" data-m="lija" aria-pressed="false">Lija</button>
+            <button type="button" data-m="arena" aria-pressed="false">Arenado</button>
             <button type="button" data-m="quim" aria-pressed="false">Removedor</button>
             <button type="button" data-m="laser" aria-pressed="true">Láser</button>
           </div>
@@ -330,6 +335,8 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
             <g class="dust fade" fill="#B5793F"><circle cx="120" cy="96" r="2.5"/><circle cx="160" cy="84" r="2"/><circle cx="210" cy="92" r="3"/><circle cx="300" cy="78" r="2"/><circle cx="350" cy="94" r="2.5"/><circle cx="420" cy="86" r="2"/><circle cx="480" cy="98" r="3"/><circle cx="250" cy="60" r="1.6"/><circle cx="390" cy="66" r="1.6"/></g>
             <g class="bracket fade"><line x1="570" y1="110" x2="570" y2="122" stroke="#E0301E" stroke-width="2"/><line x1="564" y1="110" x2="576" y2="110" stroke="#E0301E" stroke-width="2"/><line x1="564" y1="122" x2="576" y2="122" stroke="#E0301E" stroke-width="2"/></g>
             <g class="beamline fade"><line x1="300" y1="20" x2="300" y2="110" stroke="#E0301E" stroke-width="2"/><circle cx="300" cy="110" r="5" fill="#E0301E"/><circle cx="300" cy="110" r="12" fill="#E0301E" opacity=".2"/></g>
+            <path class="rough fade" fill="#FFFFFF" d="M40 110 H560 V122 L540 128 L520 122 L500 131 L480 123 L460 129 L440 122 L420 132 L400 124 L380 130 L360 122 L340 128 L320 123 L300 131 L280 122 L260 129 L240 124 L220 132 L200 122 L180 128 L160 123 L140 131 L120 122 L100 129 L80 124 L60 130 L40 122 Z"/>
+            <g class="sand fade" fill="#B9AE98"><circle cx="90" cy="98" r="1.8"/><circle cx="130" cy="86" r="1.5"/><circle cx="175" cy="94" r="2"/><circle cx="215" cy="80" r="1.4"/><circle cx="262" cy="96" r="1.8"/><circle cx="305" cy="88" r="1.5"/><circle cx="348" cy="99" r="2"/><circle cx="392" cy="84" r="1.6"/><circle cx="436" cy="95" r="1.8"/><circle cx="478" cy="82" r="1.5"/><circle cx="520" cy="97" r="2"/><circle cx="150" cy="70" r="1.2"/><circle cx="330" cy="68" r="1.2"/><circle cx="460" cy="66" r="1.2"/><circle cx="240" cy="62" r="1.1"/></g>
             <line x1="20" y1="110" x2="580" y2="110" stroke="#14251C" stroke-dasharray="4 4" stroke-width="1"/>
             <text x="40" y="258">Madera</text>
             <text x="40" y="40" class="lbl-strong" id="xs-label">Superficie original: intacta</text>
@@ -339,13 +346,13 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
         </div>
         <div class="tbl">
           <table class="facts" id="facts">
-            <thead><tr><th scope="col"></th><th scope="col" data-c="lija">Lija</th><th scope="col" data-c="quim">Removedor</th><th scope="col" data-c="laser">Láser</th></tr></thead>
+            <thead><tr><th scope="col"></th><th scope="col" data-c="lija">Lija</th><th scope="col" data-c="arena">Arenado</th><th scope="col" data-c="quim">Removedor</th><th scope="col" data-c="laser">Láser</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Madera que se pierde</th><td data-c="lija">Se come la superficie y redondea aristas</td><td data-c="quim">Poca, pero levanta la fibra</td><td data-c="laser">Ninguna: solo saca la pintura</td></tr>
-              <tr><th scope="row">Tallados y molduras</th><td data-c="lija">Difícil, a mano y lento</td><td data-c="quim">Queda pintura en los rincones</td><td data-c="laser">El haz entra en cada rincón</td></tr>
-              <tr><th scope="row">Residuos</th><td data-c="lija">Polvo fino de pintura vieja</td><td data-c="quim">Barro químico para descartar</td><td data-c="laser">Vapor que se aspira</td></tr>
-              <tr><th scope="row">Agua y químicos</th><td data-c="lija">No</td><td data-c="quim">Sí, y hay que neutralizar</td><td data-c="laser">No</td></tr>
-              <tr><th scope="row">Lista para terminar</th><td data-c="lija">Al terminar de lijar</td><td data-c="quim">Después de lavar y secar</td><td data-c="laser">El mismo día</td></tr>
+              <tr><th scope="row">Madera que se pierde</th><td data-c="lija">Se come la superficie y redondea aristas</td><td data-c="arena">Bastante y despareja: erosiona la veta blanda</td><td data-c="quim">Poca, pero levanta la fibra</td><td data-c="laser">Ninguna: solo saca la pintura</td></tr>
+              <tr><th scope="row">Tallados y molduras</th><td data-c="lija">Difícil, a mano y lento</td><td data-c="arena">Borra los detalles finos</td><td data-c="quim">Queda pintura en los rincones</td><td data-c="laser">El haz entra en cada rincón</td></tr>
+              <tr><th scope="row">Residuos</th><td data-c="lija">Polvo fino de pintura vieja</td><td data-c="arena">Arena y polvo de pintura por todos lados</td><td data-c="quim">Barro químico para descartar</td><td data-c="laser">Vapor que se aspira</td></tr>
+              <tr><th scope="row">Agua y químicos</th><td data-c="lija">No</td><td data-c="arena">No, pero hay que encapsular la zona</td><td data-c="quim">Sí, y hay que neutralizar</td><td data-c="laser">No</td></tr>
+              <tr><th scope="row">Lista para terminar</th><td data-c="lija">Al terminar de lijar</td><td data-c="arena">Después de lijar para emparejar</td><td data-c="quim">Después de lavar y secar</td><td data-c="laser">El mismo día</td></tr>
             </tbody>
           </table>
         </div>
@@ -524,9 +531,10 @@ const WA_GENERAL=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Ho
 /* Comparación de métodos */
 (()=>{ const svg=$('xsec'), cap=$('xcap'), lab=$('xs-label'), sub=$('xs-sub');
   const T={lija:{l:'Superficie original: se perdió ≈ 1 mm',s:'La lija no distingue pintura de madera',c:'<b>Lija:</b> saca la pintura y también la capa de arriba de la madera. Se redondean aristas, se borran tallas y queda polvo de pintura vieja en toda la casa.'},
+    arena:{l:'Superficie original: erosionada y despareja',s:'La arena se come la madera blanda entre las vetas',c:'<b>Arenado:</b> el chorro de arena saca la pintura, pero también erosiona la madera blanda entre las vetas. Queda una superficie rugosa y despareja, se pierden los detalles de las tallas y la arena se mete en todo: hay que encapsular la zona.'},
     quim:{l:'Superficie original: embebida',s:'Queda barro químico y la fibra levantada',c:'<b>Removedor:</b> ablanda la pintura, pero penetra en la madera, la oscurece y deja residuos que hay que raspar, lavar y neutralizar.'},
     laser:{l:'Superficie original: intacta',s:'El láser se detiene donde termina la pintura',c:'<b>Láser:</b> la pintura absorbe la energía del pulso y se vaporiza. La madera queda como estaba, lista para terminar el mismo día.'}};
-  function set(m){ svg.classList.remove('m-lija','m-quim','m-laser'); svg.classList.add('m-'+m); lab.textContent=T[m].l; sub.textContent=T[m].s; cap.innerHTML=T[m].c;
+  function set(m){ svg.classList.remove('m-lija','m-arena','m-quim','m-laser'); svg.classList.add('m-'+m); lab.textContent=T[m].l; sub.textContent=T[m].s; cap.innerHTML=T[m].c;
     document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m)); document.querySelectorAll('#facts [data-c]').forEach(td=>td.classList.toggle('on',td.dataset.c===m)); }
   document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>set(b.dataset.m))); set('laser'); })();
 
