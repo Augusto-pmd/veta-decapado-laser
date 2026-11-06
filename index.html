@@ -154,9 +154,9 @@ dl div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:13px 0;bord
 dl div:last-child{border-bottom:0}
 dt{color:rgba(242,247,243,.65);font-size:14px} dd{margin:0;font-weight:600}
 dd a{color:#fff}
-footer{padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
-footer svg{height:22px;width:auto}
+footer{padding-block:clamp(40px,6vw,72px) calc(28px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute);overflow:hidden}
+footer .giant{display:block;width:100%;height:auto;margin-bottom:clamp(20px,3vw,36px)}
+footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -279,9 +279,8 @@ footer svg{height:22px;width:auto}
 
 <footer>
   <div class="wrap">
-    <svg viewBox="-26 -8 352 116" aria-label="Veta"><defs><clipPath id="ft-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="ft-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="3.4"/></pattern></defs><g clip-path="url(#ft-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#ft-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#E0301E"/></svg>
-    <span>Decapado láser de madera · Olivos, Vicente López</span>
-    <span>Precios orientativos · Imágenes ilustrativas</span>
+    <svg class="giant" viewBox="-26 -8 352 116" role="img" aria-label="Veta"><defs><clipPath id="ft-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="ft-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="2.2"/></pattern></defs><g clip-path="url(#ft-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#ft-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="1.4"/><circle cx="320" cy="54" r="3.6" fill="#E0301E"/></svg>
+    <div class="row"><span>Decapado láser de madera · Olivos, Vicente López</span><span>Precios orientativos · Imágenes ilustrativas</span></div>
   </div>
 </footer>
 
