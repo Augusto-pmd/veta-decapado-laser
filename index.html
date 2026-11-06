@@ -65,8 +65,8 @@ header .btn{padding:11px 18px;font-size:15px}
 .pills{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
 .pills span{padding:8px 14px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:14px;font-weight:600}
 .stage{background:var(--green);border-radius:var(--r);padding:clamp(16px,2.4vw,26px);display:grid;gap:14px}
-.door{position:relative;width:100%;aspect-ratio:880/1168;max-height:72vh;margin-inline:auto;border-radius:8px;overflow:hidden;cursor:crosshair;touch-action:pan-y;background:#2a3b31}
-@media (max-width:880px){.door{max-height:none}}
+.door{position:relative;width:100%;aspect-ratio:880/1168;max-height:72vh;margin-inline:auto;border-radius:8px;overflow:hidden;cursor:crosshair;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:#2a3b31}
+@media (max-width:880px){.door{max-height:none;width:min(100%, calc(56svh * 880 / 1168))}}
 .door img,.door canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .door img{object-fit:cover}
 .d-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(20,37,28,.82);color:#fff;font-size:14px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .4s}
@@ -103,6 +103,60 @@ header .btn{padding:11px 18px;font-size:15px}
 .zmap{position:absolute;right:-18%;top:-22%;width:92%;height:auto;opacity:.95}
 .b-soft h4,.b-soft small{position:relative}
 @media (max-width:760px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:160px;gap:10px}.b{padding:16px}}
+
+/* Galería de ejemplos */
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 16px}
+@media (max-width:980px){.gal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px}}
+.ex{margin:0;min-width:0}
+.ex .ph{aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#dfe6e0}
+.ex img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.ex:hover img{transform:scale(1.05)}
+.ex h3{font-size:17px;margin-top:10px;line-height:1.2}
+.ex p{font-size:14px;color:var(--mute);margin-top:2px}
+.note{margin-top:20px;font-size:13px;color:var(--mute)}
+
+/* Comparación de métodos */
+#metodo{background:var(--green-soft)}
+.cmp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:980px){.cmp{grid-template-columns:1fr}}
+.cmp-card{background:var(--card);border-radius:var(--r);padding:clamp(16px,2.5vw,24px)}
+.tabs{display:inline-flex;background:var(--green-soft);border-radius:999px;padding:4px;margin-bottom:16px}
+.tabs button{border:0;background:transparent;padding:11px 20px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;color:var(--green)}
+.tabs button[aria-pressed="true"]{background:var(--green);color:var(--on-green)}
+.xsec{width:100%;height:auto;display:block}
+.xsec text{font-family:var(--f-body);font-size:12px;fill:var(--mute)}
+.xsec .lbl-strong{fill:var(--ink);font-weight:700;font-size:14px}
+.xsec .layer{transition:transform .7s cubic-bezier(.6,0,.2,1),opacity .6s;transform-box:fill-box;transform-origin:50% 100%}
+.xsec .fade{transition:opacity .6s}
+.m-lija .layer,.m-laser .layer{transform:scaleY(0)}
+.m-quim .layer{opacity:0}
+.xsec .lost{fill:#B5793F;transition:opacity .6s}
+.m-lija .lost{opacity:0}
+.xsec .soak{opacity:0}.m-quim .soak{opacity:.45}
+.xsec .dust,.xsec .gooblob,.xsec .beamline,.xsec .bracket{opacity:0}
+.m-lija .dust,.m-lija .bracket{opacity:1}.m-quim .gooblob{opacity:1}.m-laser .beamline{opacity:1}
+.xcap{margin-top:12px;font-size:15px;color:var(--mute);min-height:3.2em}
+.xcap b{color:var(--ink)}
+.tbl{overflow-x:auto;background:var(--card);border-radius:var(--r);padding:8px 16px}
+table.facts{width:100%;border-collapse:collapse;font-size:14px}
+table.facts th,table.facts td{text-align:left;padding:13px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.facts tr:last-child th,table.facts tr:last-child td{border-bottom:0}
+table.facts thead th{font-size:13px;color:var(--mute);font-weight:700}
+table.facts tbody th{font-weight:700;width:30%}
+table.facts td{color:var(--mute);transition:background .3s,color .3s}
+table.facts .on{background:#FCE7E3;color:var(--ink);font-weight:600}
+table.facts thead .on{background:transparent;color:var(--beam)}
+
+/* Preguntas frecuentes */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:clamp(20px,5vw,64px);align-items:start}
+@media (max-width:860px){.faq-grid{grid-template-columns:1fr}}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;padding:0 18px}
+.faq summary{cursor:pointer;list-style:none;padding:17px 0;font-weight:700;font-size:16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:22px;color:var(--green);transition:transform .2s;flex:none}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding-bottom:18px;color:var(--mute);font-size:15px}
 
 /* Cotizador paso a paso */
 .qz{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start}
@@ -204,7 +258,7 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
 <header>
   <div class="wrap">
     <a class="logo" href="#inicio" aria-label="Veta, inicio"><svg viewBox="-26 -8 352 116" aria-hidden="true"><defs><clipPath id="lg-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="lg-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="3.4"/></pattern></defs><g clip-path="url(#lg-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#lg-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#E0301E"/></svg></a>
-    <nav aria-label="Secciones"><a href="#piezas">Qué restauramos</a><a href="#cotizar">Cotizar</a><a href="#contacto">Contacto</a></nav>
+    <nav aria-label="Secciones"><a href="#piezas">Qué restauramos</a><a href="#metodo">Por qué láser</a><a href="#cotizar">Cotizar</a><a href="#faq">Preguntas</a><a href="#contacto">Contacto</a></nav>
     <a class="btn" href="#cotizar">Cotizar</a>
   </div>
 </header>
@@ -233,20 +287,68 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
 
   <section id="piezas">
     <div class="wrap">
-      <div class="head"><h2 class="disp">Qué restauramos</h2><p>Si es madera y tiene pintura o barniz viejo, la sacamos. Sin desarmar y sin perder un milímetro.</p></div>
-      <div class="bento">
-        <article class="b b-photo w2 h2"><img src="img/09-escalera.webp" alt="Escalera con balaustres torneados mitad pintados y mitad restaurados" loading="lazy"><div><h3>Escaleras</h3><p>Balaustres torneados, pasamanos y escalones.</p></div></article>
-        <article class="b b-photo h2"><img src="img/02-puerta-antes-despues.webp" alt="Puerta mitad pintada y mitad restaurada" loading="lazy"><div><h3>Puertas</h3><p>De entrada, interiores y portones.</p></div></article>
-        <article class="b b-green"><span class="big">0 mm</span><small>de madera perdida. El láser solo saca la pintura.</small></article>
-        <article class="b b-white"><h4>Sin lija ni químicos</h4><small style="color:var(--mute);opacity:1">No hay polvo ni barro químico. Se puede barnizar el mismo día.</small></article>
-        <article class="b b-photo w2"><img src="img/07-persianas.webp" alt="Persianas de madera, una pintada y otra restaurada" loading="lazy"><div><h3>Persianas</h3><p>Postigos y celosías, sin desmontar.</p></div></article>
-        <article class="b b-soft">
-          <svg class="zmap" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="none" stroke="#1F5A3E" stroke-opacity=".18" stroke-width="2"/><circle cx="100" cy="100" r="62" fill="none" stroke="#1F5A3E" stroke-opacity=".28" stroke-width="2"/><circle cx="100" cy="100" r="32" fill="none" stroke="#1F5A3E" stroke-opacity=".4" stroke-width="2"/><circle cx="100" cy="100" r="7" fill="#E0301E"/><circle cx="100" cy="100" r="14" fill="#E0301E" fill-opacity=".2"/></svg>
-          <h4>Vamos a domicilio</h4><small>Vicente López, San Isidro, San Fernando y CABA.</small></article>
-        <article class="b b-photo"><img src="img/06-silla.webp" alt="Silla antigua mitad restaurada" loading="lazy"><div><h3>Muebles</h3></div></article>
-        <article class="b b-deep"><span class="big">300 W</span><small>Láser pulsado de 1064 nm. Pulsos de nanosegundos que no queman la madera.</small></article>
-        <article class="b b-photo"><img src="img/08-parquet.webp" alt="Parquet con una franja decapada" loading="lazy"><div><h3>Pisos</h3></div></article>
-        <article class="b b-photo w2"><img src="img/10-vigas.webp" alt="Vigas de techo mitad restauradas" loading="lazy"><div><h3>Vigas y techos</h3><p>Tirantes con hollín, humo o pintura.</p></div></article>
+      <div class="head"><h2 class="disp">Qué restauramos</h2><p>Si es madera y tiene pintura o barniz viejo, la sacamos. Algunos ejemplos de lo que hacemos.</p></div>
+      <div class="gal">
+        <article class="ex"><div class="ph"><img src="img/02-puerta-antes-despues.webp" alt="Puertas: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Puertas</h3><p>De entrada, interiores y de casa chorizo</p></article>
+        <article class="ex"><div class="ph"><img src="img/11-porton.webp" alt="Portones: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Portones</h3><p>De tablas, con herrajes de hierro</p></article>
+        <article class="ex"><div class="ph"><img src="img/12-ventana.webp" alt="Ventanas: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Ventanas</h3><p>Marcos y vidrio repartido, sin desmontar</p></article>
+        <article class="ex"><div class="ph"><img src="img/07-persianas.webp" alt="Persianas: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Persianas</h3><p>Postigos y celosías</p></article>
+        <article class="ex"><div class="ph"><img src="img/09-escalera.webp" alt="Escaleras: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Escaleras</h3><p>Balaustres torneados y pasamanos</p></article>
+        <article class="ex"><div class="ph"><img src="img/04-roseta-tallada.webp" alt="Tallas y rosetas: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Tallas y rosetas</h3><p>Relieves con décadas de pintura</p></article>
+        <article class="ex"><div class="ph"><img src="img/14-comoda.webp" alt="Cómodas y aparadores: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Cómodas y aparadores</h3><p>Muebles con tallas y herrajes</p></article>
+        <article class="ex"><div class="ph"><img src="img/13-mesa.webp" alt="Mesas y sillas: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Mesas y sillas</h3><p>Patas torneadas y tapas</p></article>
+        <article class="ex"><div class="ph"><img src="img/08-parquet.webp" alt="Pisos de parquet: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Pisos de parquet</h3><p>Pintura o barniz viejo</p></article>
+        <article class="ex"><div class="ph"><img src="img/15-deck.webp" alt="Decks: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Decks</h3><p>Madera gris por el sol y la lluvia</p></article>
+        <article class="ex"><div class="ph"><img src="img/16-boiserie.webp" alt="Revestimientos: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Revestimientos</h3><p>Boiserie y paneles de pared</p></article>
+        <article class="ex"><div class="ph"><img src="img/10-vigas.webp" alt="Vigas y techos: mitad con pintura vieja y mitad restaurada" loading="lazy"></div><h3>Vigas y techos</h3><p>Tirantes con hollín o pintura</p></article>
+      </div>
+      <p class="note">Imágenes ilustrativas del resultado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="metodo">
+    <div class="wrap">
+      <div class="head"><h2 class="disp">Tres formas de sacar pintura</h2><p>Corte de una tabla con tres manos de pintura. Elegí un método y mirá qué le pasa a la madera.</p></div>
+      <div class="cmp">
+        <div class="cmp-card">
+          <div class="tabs" role="group" aria-label="Método">
+            <button type="button" data-m="lija" aria-pressed="false">Lija</button>
+            <button type="button" data-m="quim" aria-pressed="false">Removedor</button>
+            <button type="button" data-m="laser" aria-pressed="true">Láser</button>
+          </div>
+          <svg class="xsec m-laser" id="xsec" viewBox="0 0 600 270" role="img" aria-label="Corte de una tabla con capas de pintura">
+            <defs><clipPath id="woodclip"><rect x="40" y="110" width="520" height="130"/></clipPath></defs>
+            <rect x="40" y="122" width="520" height="118" fill="#B5793F"/>
+            <rect class="lost" x="40" y="110" width="520" height="12"/>
+            <g clip-path="url(#woodclip)" stroke="#6A4020" stroke-opacity=".55" fill="none" stroke-width="1.4"><path d="M40 140 C160 132 260 150 380 138 S520 146 560 140"/><path d="M40 160 C140 168 240 152 360 162 S500 156 560 164"/><path d="M40 184 C170 176 280 194 400 182 S520 190 560 186"/><path d="M40 206 C150 214 270 198 380 210 S510 202 560 208"/><path d="M40 228 C160 222 280 234 400 226 S520 232 560 228"/><ellipse cx="420" cy="172" rx="26" ry="9"/><ellipse cx="420" cy="172" rx="14" ry="4.5"/></g>
+            <rect class="soak fade" x="40" y="110" width="520" height="16" fill="#3A2412"/>
+            <g class="layer"><rect x="40" y="100" width="520" height="10" fill="#8C3B2A"/></g>
+            <g class="layer"><rect x="40" y="90" width="520" height="10" fill="#E3DCC6"/></g>
+            <g class="layer"><rect x="40" y="78" width="520" height="12" fill="#1F5A3E"/></g>
+            <path class="gooblob fade" fill="#7C8B3C" d="M40 110 L40 96 C80 90 110 102 150 94 S230 88 270 98 S350 104 390 92 S480 90 520 100 S560 96 560 98 L560 110 Z" opacity=".85"/>
+            <g class="dust fade" fill="#B5793F"><circle cx="120" cy="96" r="2.5"/><circle cx="160" cy="84" r="2"/><circle cx="210" cy="92" r="3"/><circle cx="300" cy="78" r="2"/><circle cx="350" cy="94" r="2.5"/><circle cx="420" cy="86" r="2"/><circle cx="480" cy="98" r="3"/><circle cx="250" cy="60" r="1.6"/><circle cx="390" cy="66" r="1.6"/></g>
+            <g class="bracket fade"><line x1="570" y1="110" x2="570" y2="122" stroke="#E0301E" stroke-width="2"/><line x1="564" y1="110" x2="576" y2="110" stroke="#E0301E" stroke-width="2"/><line x1="564" y1="122" x2="576" y2="122" stroke="#E0301E" stroke-width="2"/></g>
+            <g class="beamline fade"><line x1="300" y1="20" x2="300" y2="110" stroke="#E0301E" stroke-width="2"/><circle cx="300" cy="110" r="5" fill="#E0301E"/><circle cx="300" cy="110" r="12" fill="#E0301E" opacity=".2"/></g>
+            <line x1="20" y1="110" x2="580" y2="110" stroke="#14251C" stroke-dasharray="4 4" stroke-width="1"/>
+            <text x="40" y="258">Madera</text>
+            <text x="40" y="40" class="lbl-strong" id="xs-label">Superficie original: intacta</text>
+            <text x="40" y="58" id="xs-sub">El láser se detiene donde termina la pintura</text>
+          </svg>
+          <p class="xcap" id="xcap"></p>
+        </div>
+        <div class="tbl">
+          <table class="facts" id="facts">
+            <thead><tr><th scope="col"></th><th scope="col" data-c="lija">Lija</th><th scope="col" data-c="quim">Removedor</th><th scope="col" data-c="laser">Láser</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Madera que se pierde</th><td data-c="lija">Se come la superficie y redondea aristas</td><td data-c="quim">Poca, pero levanta la fibra</td><td data-c="laser">Ninguna: solo saca la pintura</td></tr>
+              <tr><th scope="row">Tallados y molduras</th><td data-c="lija">Difícil, a mano y lento</td><td data-c="quim">Queda pintura en los rincones</td><td data-c="laser">El haz entra en cada rincón</td></tr>
+              <tr><th scope="row">Residuos</th><td data-c="lija">Polvo fino de pintura vieja</td><td data-c="quim">Barro químico para descartar</td><td data-c="laser">Vapor que se aspira</td></tr>
+              <tr><th scope="row">Agua y químicos</th><td data-c="lija">No</td><td data-c="quim">Sí, y hay que neutralizar</td><td data-c="laser">No</td></tr>
+              <tr><th scope="row">Lista para terminar</th><td data-c="lija">Al terminar de lijar</td><td data-c="quim">Después de lavar y secar</td><td data-c="laser">El mismo día</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
@@ -317,6 +419,20 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
     </div>
   </section>
 
+  <section id="faq">
+    <div class="wrap faq-grid">
+      <div class="head"><h2 class="disp">Preguntas frecuentes</h2><p>Lo que más nos consultan antes de empezar.</p></div>
+      <div class="faq">
+        <details><summary>¿El láser quema la madera?</summary><p>No, si está bien regulado. Es un láser pulsado: dispara pulsos de nanosegundos que vaporizan la pintura sin darle tiempo a la madera de calentarse. Por eso siempre empezamos con una prueba en una zona que no se ve.</p></details>
+        <details><summary>¿Hay que lijar después?</summary><p>No hace falta desbastar. Para un barniz o lustre fino alcanza con un repaso suave de lija fina antes de la terminación.</p></details>
+        <details><summary>¿Hace humo u olor?</summary><p>La pintura se vaporiza y genera humo. Trabajamos con aspiración y ventilación, y en domicilio aislamos la zona de trabajo.</p></details>
+        <details><summary>¿Hay un trabajo mínimo?</summary><p>Sí, el mínimo es de 4 horas de láser. Si tenés varias piezas chicas, las juntamos en la misma visita y entran en ese mínimo.</p></details>
+        <details><summary>¿Cuánto tarda?</summary><p>Depende de la cantidad de manos y del detalle. Una superficie lisa con pocas capas avanza rápido; tallados y pinturas gruesas llevan más tiempo. El cotizador te da una estimación en horas.</p></details>
+        <details><summary>¿Sirve para cualquier pintura?</summary><p>Látex, esmaltes, barnices viejos, hollín y grafitis salen muy bien. Poliuretanos, epoxi y lacas UV de fábrica cuestan más: ahí hacemos una prueba antes de confirmar el precio.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section class="green" id="contacto">
     <div class="wrap contact-grid">
       <div>
@@ -370,10 +486,11 @@ const WA_GENERAL=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Ho
   const door=$('door'), cP=$('cPaint'), cF=$('cFx'), xP=cP.getContext('2d'), xF=cF.getContext('2d');
   const hint=$('hint'), pct=$('pct'), meter=$('meter'), done=$('done');
   const paint=new Image(); paint.src='img/puerta-pintada.webp';
+  const coarse=matchMedia('(pointer:coarse)').matches;
   let W=0,H=0,R=26,last=null,parts=[],laser={x:-99,y:-99,on:false},touched=false,dirty=true,raf=0;
   const smp=document.createElement('canvas'); smp.width=60; smp.height=80; const sx=smp.getContext('2d',{willReadFrequently:true});
   function drawPaint(){ xP.globalCompositeOperation='source-over'; xP.clearRect(0,0,W,H); if(paint.complete&&paint.naturalWidth) xP.drawImage(paint,0,0,W,H); else {xP.fillStyle='#2F5A40'; xP.fillRect(0,0,W,H);} dirty=true; measure(); }
-  function setup(){ const r=door.getBoundingClientRect(); if(!r.width) return; const d=Math.min(2,devicePixelRatio||1); W=r.width; H=r.height; R=Math.max(18,Math.min(34,W/16));
+  function setup(){ const r=door.getBoundingClientRect(); if(!r.width) return; const d=Math.min(2,devicePixelRatio||1); W=r.width; H=r.height; R=coarse? Math.max(26,Math.min(40,W/10)) : Math.max(18,Math.min(34,W/16));
     for(const c of [cP,cF]){ c.width=Math.round(W*d); c.height=Math.round(H*d); c.getContext('2d').setTransform(d,0,0,d,0,0); } drawPaint();
     if(!touched){ for(let t=0;t<=1;t+=.02){ const x=W*(.62+.22*t), y=H*(.18+.16*t); ablate(x,y,1); ablate(x,y+R*.5,1); } dirty=true; measure(); } }
   function ablate(x,y,s){ xP.save(); xP.globalCompositeOperation='destination-out'; xP.translate(x,y); xP.scale(1,.6);
@@ -393,13 +510,25 @@ const WA_GENERAL=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Ho
   const pos=e=>{const r=door.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top};};
   function first(){ if(!touched){ touched=true; hint.classList.add('gone'); } }
   door.addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'||laser.down){ first(); const p=pos(e); laser.x=p.x; laser.y=p.y; laser.on=true; stroke(p.x,p.y); } });
-  door.addEventListener('pointerdown',e=>{ first(); laser.down=true; const p=pos(e); laser.on=true; last=null; stroke(p.x,p.y); });
-  const stop=()=>{ laser.down=false; laser.on=false; last=null; loop(); };
+  door.addEventListener('pointerdown',e=>{ first(); laser.down=true; try{door.setPointerCapture(e.pointerId);}catch(_){} const p=pos(e); laser.x=p.x; laser.y=p.y; laser.on=true; last=null; stroke(p.x,p.y); if(e.pointerType!=='mouse') e.preventDefault(); });
+  const stop=e=>{ if(e && e.type==='pointerleave' && laser.down && e.pointerType!=='mouse') return; laser.down=false; laser.on=false; last=null; loop(); };
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>door.addEventListener(ev,stop));
+  // respaldo para Safari viejo: que el dedo sobre la puerta no mueva la página
+  door.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+  door.addEventListener('contextmenu',e=>e.preventDefault());
   $('repaint').addEventListener('click',drawPaint);
-  if(matchMedia('(hover:none)').matches) $('hintTxt').textContent='Deslizá el dedo de costado';
+  if(coarse) $('hintTxt').textContent='Pasá el dedo por la puerta';
   paint.onload=setup; new ResizeObserver(setup).observe(door); setInterval(measure,300);
 })();
+
+/* Comparación de métodos */
+(()=>{ const svg=$('xsec'), cap=$('xcap'), lab=$('xs-label'), sub=$('xs-sub');
+  const T={lija:{l:'Superficie original: se perdió ≈ 1 mm',s:'La lija no distingue pintura de madera',c:'<b>Lija:</b> saca la pintura y también la capa de arriba de la madera. Se redondean aristas, se borran tallas y queda polvo de pintura vieja en toda la casa.'},
+    quim:{l:'Superficie original: embebida',s:'Queda barro químico y la fibra levantada',c:'<b>Removedor:</b> ablanda la pintura, pero penetra en la madera, la oscurece y deja residuos que hay que raspar, lavar y neutralizar.'},
+    laser:{l:'Superficie original: intacta',s:'El láser se detiene donde termina la pintura',c:'<b>Láser:</b> la pintura absorbe la energía del pulso y se vaporiza. La madera queda como estaba, lista para terminar el mismo día.'}};
+  function set(m){ svg.classList.remove('m-lija','m-quim','m-laser'); svg.classList.add('m-'+m); lab.textContent=T[m].l; sub.textContent=T[m].s; cap.innerHTML=T[m].c;
+    document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m)); document.querySelectorAll('#facts [data-c]').forEach(td=>td.classList.toggle('on',td.dataset.c===m)); }
+  document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>set(b.dataset.m))); set('laser'); })();
 
 /* Cotizador paso a paso */
 (()=>{
