@@ -15,15 +15,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&display=swap">
 <style>
-/* Layout: página clara y corta. Portada con la puerta real que se decapa con el cursor → qué restauramos → por qué láser (bloque verde) → cotizador → contacto (bloque verde). */
+/* Layout: clara y corta. Portada con la puerta real que se decapa → grilla bento (piezas + por qué) → cotizador paso a paso tipo app → contacto verde → pie con logo gigante. */
 :root{
   color-scheme:light;
   --bg:#F2F5F1; --card:#FFFFFF; --ink:#14251C; --mute:#5B6B61; --line:#D3DDD5;
-  --green:#1F5A3E; --green-2:#2A7351; --green-soft:#E1EBE4; --on-green:#F2F7F3;
-  --beam:#E0301E; --wood:#A5672F;
+  --green:#1F5A3E; --green-2:#2A7351; --green-deep:#163F2C; --green-soft:#E1EBE4; --on-green:#F2F7F3;
+  --beam:#E0301E; --wood:#F2B07A;
   --f-display:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
   --f-body:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --r:10px;
+  --r:18px;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -31,6 +31,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
 h1,h2,h3{margin:0;text-wrap:balance} p{margin:0} a{color:inherit}
+button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--beam);outline-offset:3px}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 .disp{font-family:var(--f-display);font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:.005em}
@@ -63,8 +64,8 @@ header .btn{padding:11px 18px;font-size:15px}
 .hero .cta{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap}
 .pills{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
 .pills span{padding:8px 14px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:14px;font-weight:600}
-.stage{background:var(--green);border-radius:18px;padding:clamp(16px,2.4vw,26px);display:grid;gap:14px}
-.door{position:relative;width:100%;aspect-ratio:880/1168;max-height:72vh;margin-inline:auto;border-radius:6px;overflow:hidden;cursor:crosshair;touch-action:pan-y;background:#2a3b31}
+.stage{background:var(--green);border-radius:var(--r);padding:clamp(16px,2.4vw,26px);display:grid;gap:14px}
+.door{position:relative;width:100%;aspect-ratio:880/1168;max-height:72vh;margin-inline:auto;border-radius:8px;overflow:hidden;cursor:crosshair;touch-action:pan-y;background:#2a3b31}
 @media (max-width:880px){.door{max-height:none}}
 .door img,.door canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .door img{object-fit:cover}
@@ -73,74 +74,103 @@ header .btn{padding:11px 18px;font-size:15px}
 .d-hint.gone{opacity:0}
 .d-bar{display:flex;align-items:center;gap:14px;color:var(--on-green);font-size:14px}
 .meter{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden}
-.meter i{display:block;height:100%;width:0;background:#F2B07A;transition:width .2s}
+.meter i{display:block;height:100%;width:0;background:var(--wood);transition:width .2s}
 .d-bar button{font:600 13px/1 var(--f-body);background:transparent;border:1.5px solid rgba(255,255,255,.4);color:var(--on-green);padding:9px 14px;border-radius:999px;cursor:pointer}
 .d-bar button:hover{border-color:#fff}
-.done{display:none;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;color:var(--on-green);font-weight:600}
+.done{display:none;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;color:var(--on-green);font-weight:600}
 .done.show{display:flex}
 .done a{background:#fff;color:var(--green);border-color:#fff;padding:10px 16px;font-size:14px}
 
-/* Qué restauramos */
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media (max-width:860px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.grid3{grid-template-columns:1fr}}
-.piece{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
-.piece .ph{aspect-ratio:4/3;overflow:hidden}
-.piece img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
-.piece:hover img{transform:scale(1.04)}
-.piece div.t{padding:14px 16px 16px;display:grid;gap:2px}
-.piece h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:26px;line-height:1}
-.piece p{font-size:14px;color:var(--mute)}
+/* Bento */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,215px);gap:14px;grid-auto-flow:dense}
+.b{border-radius:var(--r);overflow:hidden;position:relative;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;min-width:0}
+.w2{grid-column:span 2}.h2{grid-row:span 2}
+.b-photo{background:#2a3b31;color:#fff}
+.b-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.b-photo:hover img{transform:scale(1.05)}
+.b-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,14,0) 45%,rgba(10,20,14,.78))}
+.b-photo > div{position:relative;z-index:1}
+.b-photo h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(26px,2.6vw,38px);line-height:1}
+.b-photo p{font-size:14px;opacity:.85}
+.b-green{background:var(--green);color:var(--on-green)}
+.b-deep{background:var(--green-deep);color:var(--on-green)}
+.b-soft{background:var(--green-soft);color:var(--green)}
+.b-white{background:var(--card);border:1px solid var(--line)}
+.big{font-family:var(--f-display);font-weight:800;line-height:.9;font-size:clamp(48px,5.4vw,78px);color:var(--wood)}
+.b-white .big,.b-soft .big{color:var(--green)}
+.b small{font-size:14px;opacity:.85;line-height:1.35}
+.b h4{margin:0;font-size:18px;line-height:1.2}
+.zmap{position:absolute;right:-18%;top:-22%;width:92%;height:auto;opacity:.95}
+.b-soft h4,.b-soft small{position:relative}
+@media (max-width:760px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:160px;gap:10px}.b{padding:16px}}
 
-/* Por qué láser */
-.green{background:var(--green);color:var(--on-green)}
-.green .head p{color:rgba(242,247,243,.75)}
-.points{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
-@media (max-width:760px){.points{grid-template-columns:1fr}}
-.points div{display:grid;gap:8px;align-content:start;padding-top:22px;border-top:2px solid rgba(255,255,255,.22)}
-.points b{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(34px,3.6vw,46px);line-height:1;color:#F2B07A}
-.points h3{font-size:19px}
-.points p{color:rgba(242,247,243,.78);font-size:16px}
-
-/* Cotizador */
-.quote{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
-@media (max-width:960px){.quote{grid-template-columns:1fr}}
-.q-form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,28px);display:grid;gap:24px}
-fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
-legend{padding:0;font-weight:700;font-size:16px;margin-bottom:8px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips label{position:relative}
-.chips input{position:absolute;opacity:0;pointer-events:none}
-.chips span{display:inline-flex;padding:10px 15px;border:1.5px solid var(--line);border-radius:999px;font-size:15px;cursor:pointer;background:var(--card);transition:all .15s}
-.chips label:hover span{border-color:var(--green)}
-.chips input:checked + span{border-color:var(--green);background:var(--green);color:var(--on-green)}
-.chips input:focus-visible + span{outline:2px solid var(--beam);outline-offset:2px}
-.dims{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-@media (max-width:560px){.dims{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.field{display:grid;gap:5px;min-width:0}
-.field label{font-size:13px;color:var(--mute)}
-.field input,.field select{width:100%;font:500 16px/1.2 var(--f-body);padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+/* Cotizador paso a paso */
+.qz{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:960px){.qz{grid-template-columns:1fr}}
+.qz-main{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,30px);min-height:520px;display:flex;flex-direction:column}
+.qz-top{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.back{border:0;background:var(--green-soft);color:var(--green);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center;flex:none}
+.back:disabled{opacity:.35;cursor:default}
+.prog{flex:1;display:grid;gap:6px}
+.prog small{font-size:13px;color:var(--mute);font-weight:600}
+.prog .track{height:6px;border-radius:6px;background:var(--green-soft);overflow:hidden}
+.prog .track i{display:block;height:100%;width:0;background:var(--green);transition:width .35s ease}
+.step{display:none;flex:1}
+.step.on{display:block;animation:stepIn .35s ease}
+@keyframes stepIn{from{opacity:0;transform:translateX(18px)}}
+.step h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(32px,3.6vw,46px);line-height:.95;margin-bottom:8px}
+.step > p{color:var(--mute);margin-bottom:20px;font-size:15px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+@media (max-width:520px){.opts{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.opt span{padding:10px 12px;font-size:14px}}
+.opt{border:2px solid var(--line);border-radius:14px;background:var(--card);padding:0;overflow:hidden;cursor:pointer;text-align:left;display:flex;flex-direction:column;transition:border-color .15s,transform .15s,box-shadow .15s}
+.opt:hover{border-color:var(--green-2);transform:translateY(-2px)}
+.opt[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 4px var(--green-soft)}
+.opt img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.opt .sw{height:64px;display:block}
+.opt span{display:block;padding:12px 14px;font-weight:700;font-size:15px;line-height:1.2}
+.opt span em{display:block;font-style:normal;font-weight:400;font-size:13px;color:var(--mute);margin-top:3px}
+.opt.txt{justify-content:center;min-height:120px;background:var(--green-soft);border-color:transparent}
+.seg{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.seg button{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:18px 0;font-family:var(--f-display);font-weight:800;font-size:34px;cursor:pointer;color:var(--ink);transition:all .15s}
+.seg button:hover{border-color:var(--green-2)}
+.seg button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+@media (max-width:480px){.seg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ill{height:64px;display:block;background:#E9DCCB}
+.dims{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:460px}
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-size:13px;color:var(--mute);font-weight:600}
+.field input,.field select{width:100%;font:600 20px/1.2 var(--f-body);padding:14px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
 .field input:focus,.field select:focus{border-color:var(--green);outline:none}
-.help{font-size:13px;color:var(--mute)}
-.range-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
-input[type=range]{width:100%;accent-color:var(--green)}
-.range-val{font-family:var(--f-display);font-weight:800;font-size:30px;min-width:2.5ch;text-align:right;color:var(--green)}
-.ticket{position:sticky;top:84px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-@media (max-width:960px){.ticket{position:static}}
-.t-top{background:var(--green);color:var(--on-green);padding:20px 22px;display:grid;gap:6px}
-.t-top small{font-size:13px;opacity:.8}
-.t-top b{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,4vw,46px);line-height:1;font-variant-numeric:tabular-nums}
-.t-body{padding:18px 22px 22px;display:grid;gap:14px}
-.t-rows div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
-.t-rows div span:first-child{color:var(--mute)}
-.t-rows div span:last-child{text-align:right;font-weight:600}
-.t-flag{display:none;gap:8px;padding:12px 14px;border-radius:8px;background:#FBF0E2;color:#6B4210;font-size:14px}
-.t-flag.show{display:grid}
-.t-body .row{display:grid;grid-template-columns:1fr auto;gap:8px}
-.fine{font-size:13px;color:var(--mute)}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:48px;height:48px;border-radius:12px;border:2px solid var(--line);background:var(--card);font-size:22px;cursor:pointer}
+.stepper output{min-width:2ch;text-align:center;font:800 28px/1 var(--f-display)}
+.next{margin-top:24px}
+.zchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.zchips button{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer}
+.zchips button[aria-pressed="true"]{background:var(--green);color:var(--on-green);border-color:var(--green)}
+.res-price{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,6vw,76px);line-height:.95;color:var(--green);font-variant-numeric:tabular-nums}
+.res-sub{color:var(--mute);margin:6px 0 18px;font-size:15px}
+.flags{display:grid;gap:8px;margin-bottom:18px}
+.flags span{padding:12px 14px;border-radius:12px;background:#FBF0E2;color:#6B4210;font-size:14px}
+.res-actions{display:grid;gap:10px;max-width:460px}
+.res-actions .row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.restart{background:none;border:0;color:var(--mute);text-decoration:underline;cursor:pointer;justify-self:start;padding:0;font-size:14px}
 .copied{font-size:13px;color:var(--green-2);min-height:1em}
+.qz-side{position:sticky;top:84px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media (max-width:960px){.qz-side{position:static}}
+.qs-top{background:var(--green);color:var(--on-green);padding:20px 22px;display:grid;gap:6px}
+.qs-top small{font-size:13px;opacity:.8}
+.qs-top b{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,3.4vw,42px);line-height:1;font-variant-numeric:tabular-nums}
+.qs-list{padding:8px 22px 18px;display:grid}
+.qs-list button{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:12px 0;border:0;border-bottom:1px solid var(--line);background:none;cursor:pointer;text-align:left;font-size:15px}
+.qs-list button:last-child{border-bottom:0}
+.qs-list button span:first-child{color:var(--mute)}
+.qs-list button span:last-child{font-weight:700;text-align:right}
+.qs-list button.empty span:last-child{color:#A9B5AD;font-weight:500}
+.qs-foot{padding:0 22px 20px;font-size:13px;color:var(--mute)}
 
 /* Contacto */
+.green{background:var(--green);color:var(--on-green)}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:center}
 @media (max-width:860px){.contact-grid{grid-template-columns:1fr}}
 .contact-grid h2{font-size:clamp(52px,7vw,96px)}
@@ -149,7 +179,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
 .green .btn{background:#fff;color:var(--green);border-color:#fff}
 .green .btn.line{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
 .green .btn.line:hover{background:rgba(255,255,255,.1)}
-dl{margin:0;display:grid;background:rgba(255,255,255,.07);border-radius:14px;padding:6px 20px}
+dl{margin:0;display:grid;background:rgba(255,255,255,.07);border-radius:var(--r);padding:6px 20px}
 dl div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.14)}
 dl div:last-child{border-bottom:0}
 dt{color:rgba(242,247,243,.65);font-size:14px} dd{margin:0;font-weight:600}
@@ -157,7 +187,16 @@ dd a{color:#fff}
 footer{padding-block:clamp(40px,6vw,72px) calc(28px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute);overflow:hidden}
 footer .giant{display:block;width:100%;height:auto;margin-bottom:clamp(20px,3vw,36px)}
 footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Barra fija en celular */
+.mbar{display:none}
+@media (max-width:760px){
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:rgba(242,245,241,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);transition:transform .3s}
+  .mbar.off{transform:translateY(110%)}
+  .mbar .btn{padding:14px 10px;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -165,7 +204,7 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
 <header>
   <div class="wrap">
     <a class="logo" href="#inicio" aria-label="Veta, inicio"><svg viewBox="-26 -8 352 116" aria-hidden="true"><defs><clipPath id="lg-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="lg-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="3.4"/></pattern></defs><g clip-path="url(#lg-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#lg-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#E0301E"/></svg></a>
-    <nav aria-label="Secciones"><a href="#piezas">Qué restauramos</a><a href="#por-que">Por qué láser</a><a href="#contacto">Contacto</a></nav>
+    <nav aria-label="Secciones"><a href="#piezas">Qué restauramos</a><a href="#cotizar">Cotizar</a><a href="#contacto">Contacto</a></nav>
     <a class="btn" href="#cotizar">Cotizar</a>
   </div>
 </header>
@@ -194,66 +233,85 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
 
   <section id="piezas">
     <div class="wrap">
-      <div class="head"><h2 class="disp">Qué restauramos</h2><p>Si es madera y tiene pintura o barniz viejo, la sacamos.</p></div>
-      <div class="grid3">
-        <article class="piece"><div class="ph"><img src="img/02-puerta-antes-despues.webp" alt="Puerta mitad pintada y mitad restaurada" loading="lazy"></div><div class="t"><h3>Puertas</h3><p>De entrada, interiores y portones.</p></div></article>
-        <article class="piece"><div class="ph"><img src="img/07-persianas.webp" alt="Persianas de madera" loading="lazy"></div><div class="t"><h3>Persianas</h3><p>Postigos y celosías, sin desmontar.</p></div></article>
-        <article class="piece"><div class="ph"><img src="img/09-escalera.webp" alt="Escalera con balaustres torneados" loading="lazy"></div><div class="t"><h3>Escaleras</h3><p>Balaustres, pasamanos y escalones.</p></div></article>
-        <article class="piece"><div class="ph"><img src="img/06-silla.webp" alt="Silla antigua mitad restaurada" loading="lazy"></div><div class="t"><h3>Muebles</h3><p>Sillas, aparadores, piezas con tallas.</p></div></article>
-        <article class="piece"><div class="ph"><img src="img/08-parquet.webp" alt="Parquet con una franja decapada" loading="lazy"></div><div class="t"><h3>Pisos</h3><p>Parquet y entablonados pintados.</p></div></article>
-        <article class="piece"><div class="ph"><img src="img/10-vigas.webp" alt="Vigas de techo mitad restauradas" loading="lazy"></div><div class="t"><h3>Vigas</h3><p>Tirantes con hollín o pintura.</p></div></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="green" id="por-que">
-    <div class="wrap">
-      <div>
-        <div class="head"><h2 class="disp">Por qué láser</h2><p>Pulsos de luz de nanosegundos vaporizan la pintura. La madera de abajo queda como estaba.</p></div>
-        <div class="points">
-          <div><b>Sin lija</b><h3>No se pierde madera</h3><p>La lija se come la superficie y borra las tallas. El láser solo saca la pintura.</p></div>
-          <div><b>Sin químicos</b><h3>Ni removedor ni agua</h3><p>No queda barro químico ni madera embebida. Se puede terminar el mismo día.</p></div>
-          <div><b>A domicilio</b><h3>Vamos con la máquina</h3><p>Tiene ruedas y anda con 220 V. Trabajamos puertas y persianas sin desmontarlas.</p></div>
-        </div>
+      <div class="head"><h2 class="disp">Qué restauramos</h2><p>Si es madera y tiene pintura o barniz viejo, la sacamos. Sin desarmar y sin perder un milímetro.</p></div>
+      <div class="bento">
+        <article class="b b-photo w2 h2"><img src="img/09-escalera.webp" alt="Escalera con balaustres torneados mitad pintados y mitad restaurados" loading="lazy"><div><h3>Escaleras</h3><p>Balaustres torneados, pasamanos y escalones.</p></div></article>
+        <article class="b b-photo h2"><img src="img/02-puerta-antes-despues.webp" alt="Puerta mitad pintada y mitad restaurada" loading="lazy"><div><h3>Puertas</h3><p>De entrada, interiores y portones.</p></div></article>
+        <article class="b b-green"><span class="big">0 mm</span><small>de madera perdida. El láser solo saca la pintura.</small></article>
+        <article class="b b-white"><h4>Sin lija ni químicos</h4><small style="color:var(--mute);opacity:1">No hay polvo ni barro químico. Se puede barnizar el mismo día.</small></article>
+        <article class="b b-photo w2"><img src="img/07-persianas.webp" alt="Persianas de madera, una pintada y otra restaurada" loading="lazy"><div><h3>Persianas</h3><p>Postigos y celosías, sin desmontar.</p></div></article>
+        <article class="b b-soft">
+          <svg class="zmap" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="none" stroke="#1F5A3E" stroke-opacity=".18" stroke-width="2"/><circle cx="100" cy="100" r="62" fill="none" stroke="#1F5A3E" stroke-opacity=".28" stroke-width="2"/><circle cx="100" cy="100" r="32" fill="none" stroke="#1F5A3E" stroke-opacity=".4" stroke-width="2"/><circle cx="100" cy="100" r="7" fill="#E0301E"/><circle cx="100" cy="100" r="14" fill="#E0301E" fill-opacity=".2"/></svg>
+          <h4>Vamos a domicilio</h4><small>Vicente López, San Isidro, San Fernando y CABA.</small></article>
+        <article class="b b-photo"><img src="img/06-silla.webp" alt="Silla antigua mitad restaurada" loading="lazy"><div><h3>Muebles</h3></div></article>
+        <article class="b b-deep"><span class="big">300 W</span><small>Láser pulsado de 1064 nm. Pulsos de nanosegundos que no queman la madera.</small></article>
+        <article class="b b-photo"><img src="img/08-parquet.webp" alt="Parquet con una franja decapada" loading="lazy"><div><h3>Pisos</h3></div></article>
+        <article class="b b-photo w2"><img src="img/10-vigas.webp" alt="Vigas de techo mitad restauradas" loading="lazy"><div><h3>Vigas y techos</h3><p>Tirantes con hollín, humo o pintura.</p></div></article>
       </div>
     </div>
   </section>
 
   <section id="cotizar">
     <div class="wrap">
-      <div class="head"><h2 class="disp">¿Cuánto sale?</h2><p>Completá lo que sepas y mandalo por WhatsApp. Eduardo confirma el precio con fotos.</p></div>
-      <div class="quote">
-        <form class="q-form" id="qform" novalidate>
-          <fieldset><legend>Qué pieza es</legend><div class="chips" id="q-tipo"></div><p class="help" id="q-tipo-help"></p></fieldset>
-          <fieldset id="fs-medidas"><legend>Medidas en centímetros</legend>
-            <div class="dims">
-              <div class="field"><label for="q-ancho">Ancho</label><input id="q-ancho" type="number" inputmode="numeric" min="1"></div>
-              <div class="field"><label for="q-alto">Alto o largo</label><input id="q-alto" type="number" inputmode="numeric" min="1"></div>
-              <div class="field"><label for="q-caras">Caras</label><select id="q-caras"><option value="1">1 cara</option><option value="2">2 caras</option></select></div>
-              <div class="field"><label for="q-cant">Cantidad</label><input id="q-cant" type="number" inputmode="numeric" min="1" value="1"></div>
-            </div>
-          </fieldset>
-          <fieldset id="fs-m2" hidden><legend>Superficie en m²</legend><div class="dims"><div class="field"><label for="q-m2">Metros cuadrados</label><input id="q-m2" type="number" inputmode="decimal" min="0.1" step="0.5"></div></div></fieldset>
-          <fieldset><legend>Qué tiene encima</legend><div class="chips" id="q-rec"></div></fieldset>
-          <fieldset><legend>Cuántas manos de pintura</legend><div class="range-row"><input id="q-capas" type="range" min="1" max="6" step="1" value="3"><span class="range-val" id="q-capas-val">3</span></div><p class="help">Raspá un borde con una moneda y contá los colores.</p></fieldset>
-          <fieldset><legend>Cómo es la superficie</legend><div class="chips" id="q-det"></div></fieldset>
-          <fieldset><legend>Dónde trabajamos</legend><div class="chips" id="q-lugar"></div><div class="field" id="f-zona" hidden><label for="q-zona">Zona</label><select id="q-zona"></select></div></fieldset>
-        </form>
-        <aside class="ticket" aria-live="polite">
-          <div class="t-top"><small>Precio estimado, sin IVA</small><b id="t-range">—</b></div>
-          <div class="t-body">
-            <div class="t-rows">
-              <div><span>Pieza</span><span id="t-pieza">—</span></div>
-              <div><span>Superficie</span><span id="t-m2">—</span></div>
-              <div><span>Tiempo de láser</span><span id="t-horas">—</span></div>
-              <div><span>Traslado</span><span id="t-tras">—</span></div>
-            </div>
-            <div class="t-flag" id="t-flag"></div>
-            <div class="field"><label for="q-nombre">Tu nombre</label><input id="q-nombre" type="text" autocomplete="given-name" placeholder="Ana"></div>
-            <div class="row"><a class="btn" id="q-wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn line" type="button" id="q-copy">Copiar</button></div>
-            <p class="copied" id="q-copied"></p>
-            <p class="fine">Sumá 2 o 3 fotos de la pieza en el chat.</p>
+      <div class="head"><h2 class="disp">¿Cuánto sale?</h2><p>Seis preguntas rápidas y te damos un precio estimado. Eduardo lo confirma con fotos por WhatsApp.</p></div>
+      <div class="qz">
+        <div class="qz-main">
+          <div class="qz-top">
+            <button class="back" type="button" id="qBack" aria-label="Paso anterior" disabled>←</button>
+            <div class="prog"><small id="qStepTxt">Paso 1 de 6</small><div class="track"><i id="qProg"></i></div></div>
           </div>
+
+          <div class="step on" data-step="tipo">
+            <h3>¿Qué querés restaurar?</h3><p>Elegí la pieza.</p>
+            <div class="opts" id="oTipo"></div>
+          </div>
+          <div class="step" data-step="rec">
+            <h3>¿Qué tiene encima?</h3><p>Si no estás seguro, elegí "No sé" y hacemos una prueba.</p>
+            <div class="opts" id="oRec"></div>
+          </div>
+          <div class="step" data-step="capas">
+            <h3>¿Cuántas manos de pintura?</h3><p>Raspá un borde con una moneda y contá los colores que aparecen.</p>
+            <div class="seg" id="oCapas"></div>
+          </div>
+          <div class="step" data-step="det">
+            <h3>¿Cómo es la superficie?</h3><p>Los relieves llevan más tiempo de láser.</p>
+            <div class="opts" id="oDet"></div>
+          </div>
+          <div class="step" data-step="medidas">
+            <h3 id="mTitle">¿Cuánto mide?</h3><p id="mHelp">Una medida aproximada alcanza.</p>
+            <div id="mCm" class="dims">
+              <div class="field"><label for="q-ancho">Ancho (cm)</label><input id="q-ancho" type="number" inputmode="numeric" min="1"></div>
+              <div class="field"><label for="q-alto">Alto o largo (cm)</label><input id="q-alto" type="number" inputmode="numeric" min="1"></div>
+              <div class="field"><label>Caras</label><div class="zchips" id="oCaras" style="margin-top:0"></div></div>
+              <div class="field"><label>Cantidad</label><div class="stepper"><button type="button" id="cMinus" aria-label="Una menos">−</button><output id="cCant">1</output><button type="button" id="cPlus" aria-label="Una más">+</button></div></div>
+            </div>
+            <div id="mM2" class="dims" hidden><div class="field"><label for="q-m2">Metros cuadrados</label><input id="q-m2" type="number" inputmode="decimal" min="0.5" step="0.5"></div></div>
+            <button class="btn next" type="button" id="mNext">Siguiente</button>
+          </div>
+          <div class="step" data-step="lugar">
+            <h3>¿Dónde trabajamos?</h3><p>La máquina tiene ruedas: vamos a tu casa si hace falta.</p>
+            <div class="opts" id="oLugar"></div>
+            <div class="zchips" id="oZona" hidden></div>
+            <button class="btn next" type="button" id="lNext" hidden>Ver precio</button>
+          </div>
+          <div class="step" data-step="res">
+            <h3>Tu presupuesto estimado</h3>
+            <div class="res-price" id="rPrice">—</div>
+            <p class="res-sub" id="rSub"></p>
+            <div class="flags" id="rFlags"></div>
+            <div class="res-actions">
+              <div class="field"><label for="q-nombre">Tu nombre</label><input id="q-nombre" type="text" autocomplete="given-name" placeholder="Ana" style="font-size:17px"></div>
+              <div class="row"><a class="btn" id="q-wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn line" type="button" id="q-copy">Copiar</button></div>
+              <p class="copied" id="q-copied"></p>
+              <button class="restart" type="button" id="qRestart">Cotizar otra pieza</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="qz-side" aria-live="polite">
+          <div class="qs-top"><small>Precio estimado, sin IVA</small><b id="sPrice">Elegí la pieza</b></div>
+          <div class="qs-list" id="sList"></div>
+          <p class="qs-foot">Tocá un dato para cambiarlo. Sumá 2 o 3 fotos en el WhatsApp.</p>
         </aside>
       </div>
     </div>
@@ -284,6 +342,8 @@ footer .row{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-betw
   </div>
 </footer>
 
+<div class="mbar off" id="mbar"><a class="btn" href="#cotizar">Cotizar</a><a class="btn line" id="mWa" target="_blank" rel="noopener">WhatsApp</a></div>
+
 <script>
 const CONFIG={whatsapp:'5491130961102',whatsappTexto:'11 3096-1102',tarifaHora:55000,minimoHoras:4,preparacion:0.5,margenBajo:0.15,margenAlto:0.2,
   direccion:'Ugarte 1500, Olivos',horario:'Lunes a viernes de 9 a 18 h',instagram:'veta.laser',mail:'hola@vetalaser.com.ar'};
@@ -291,13 +351,19 @@ const ZONAS=[{id:'vl',label:'Vicente López',costo:25000},{id:'si',label:'San Is
 const $=id=>document.getElementById(id);
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fmtNum=(n,d=1)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const money=new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
+const WA_GENERAL=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Hola Eduardo, vi la web de Veta y quiero hacer una consulta.')}`;
 
-/* Contacto */
-(()=>{ const wa=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Hola Eduardo, vi la web de Veta y quiero hacer una consulta.')}`;
-  $('c-wa').textContent=CONFIG.whatsappTexto; $('c-wa').href=wa; $('c-wa-btn').href=wa;
+/* Contacto + barra móvil */
+(()=>{ $('c-wa').textContent=CONFIG.whatsappTexto; $('c-wa').href=WA_GENERAL; $('c-wa-btn').href=WA_GENERAL; $('mWa').href=WA_GENERAL;
   $('c-map').href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.direccion+', Vicente López, Buenos Aires')}`;
   $('c-dir').textContent=CONFIG.direccion; $('c-hor').textContent=CONFIG.horario;
-  $('c-ig').textContent='@'+CONFIG.instagram; $('c-ig').href=`https://www.instagram.com/${CONFIG.instagram}/`; $('c-mail').textContent=CONFIG.mail; })();
+  $('c-ig').textContent='@'+CONFIG.instagram; $('c-ig').href=`https://www.instagram.com/${CONFIG.instagram}/`; $('c-mail').textContent=CONFIG.mail;
+  const mbar=$('mbar'), hero=document.querySelector('.hero'), cot=$('cotizar'), con=$('contacto');
+  const inView=el=>{const r=el.getBoundingClientRect(); return r.top<innerHeight*.85 && r.bottom>innerHeight*.15;};
+  const upd=()=>mbar.classList.toggle('off', hero.getBoundingClientRect().bottom>80 || inView(cot) || inView(con));
+  addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+})();
 
 /* Portada: decapar la foto real */
 (()=>{
@@ -318,14 +384,12 @@ const fmtNum=(n,d=1)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumF
   function measure(){ if(!dirty) return; dirty=false; sx.clearRect(0,0,60,80); sx.drawImage(cP,0,0,60,80); const d=sx.getImageData(0,0,60,80).data; let c=0; for(let i=3;i<d.length;i+=4) if(d[i]<90) c++;
     const p=Math.round(c/(60*80)*100); pct.textContent=`${p}% decapado`; meter.style.width=p+'%'; done.classList.toggle('show',p>=70); }
   function loop(){ if(raf) return; raf=requestAnimationFrame(tick); }
-  function tick(){ raf=0; xF.clearRect(0,0,W,H);
-    xF.globalCompositeOperation='lighter';
+  function tick(){ raf=0; xF.clearRect(0,0,W,H); xF.globalCompositeOperation='lighter';
     for(const p of parts){ p.x+=p.vx; p.y+=p.vy; p.vy+=.2; p.l-=p.d; xF.strokeStyle=`rgba(255,${150+(Math.random()*90|0)},60,${p.l})`; xF.lineWidth=1.5; xF.beginPath(); xF.moveTo(p.x,p.y); xF.lineTo(p.x-p.vx*1.8,p.y-p.vy*1.8); xF.stroke(); }
     parts=parts.filter(p=>p.l>0);
     if(laser.on){ const {x,y}=laser; const g=xF.createRadialGradient(x,y,0,x,y,R*1.3); g.addColorStop(0,'rgba(255,240,220,.9)'); g.addColorStop(.3,'rgba(255,110,50,.5)'); g.addColorStop(1,'rgba(255,60,20,0)'); xF.fillStyle=g; xF.beginPath(); xF.arc(x,y,R*1.3,0,6.29); xF.fill();
       xF.strokeStyle='rgba(255,225,200,.95)'; xF.lineWidth=2; xF.beginPath(); xF.moveTo(x-R,y); xF.lineTo(x+R,y); xF.stroke(); }
-    xF.globalCompositeOperation='source-over';
-    if(parts.length||laser.on) loop(); }
+    xF.globalCompositeOperation='source-over'; if(parts.length||laser.on) loop(); }
   const pos=e=>{const r=door.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top};};
   function first(){ if(!touched){ touched=true; hint.classList.add('gone'); } }
   door.addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'||laser.down){ first(); const p=pos(e); laser.x=p.x; laser.y=p.y; laser.on=true; stroke(p.x,p.y); } });
@@ -337,49 +401,105 @@ const fmtNum=(n,d=1)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumF
   paint.onload=setup; new ResizeObserver(setup).observe(door); setInterval(measure,300);
 })();
 
-/* Cotizador */
+/* Cotizador paso a paso */
 (()=>{
-  const TIPOS={puerta:{l:'Puerta',ancho:80,alto:205,caras:2,help:'Una puerta estándar mide 80 × 205 cm.'},
-    abertura:{l:'Ventana o postigo',ancho:120,alto:150,caras:2,help:'Medí el marco por fuera.'},
-    mueble:{l:'Mueble',ancho:120,alto:90,caras:1,help:'Medí el frente. Laterales o tapa, sumalos aparte.'},
-    escalera:{l:'Escalera o baranda',ancho:90,alto:350,caras:1,help:'Ancho del escalón por el largo total.'},
-    piso:{l:'Piso',m2:20,help:'Metros cuadrados del ambiente.'},
-    viga:{l:'Vigas o techo',m2:8,help:'Sumá las caras que quedan a la vista.'},
+  const TIPOS={puerta:{l:'Puerta',img:'02-puerta-antes-despues',ancho:80,alto:205,caras:2,help:'Una puerta estándar mide 80 × 205 cm.'},
+    abertura:{l:'Ventana o persiana',img:'07-persianas',ancho:120,alto:150,caras:2,help:'Medí el marco por fuera.'},
+    mueble:{l:'Mueble',img:'06-silla',ancho:120,alto:90,caras:1,help:'Medí el frente. Si van laterales, sumalos como otra pieza.'},
+    escalera:{l:'Escalera o baranda',img:'09-escalera',ancho:90,alto:350,caras:1,help:'Ancho del escalón por el largo total de la escalera.'},
+    piso:{l:'Piso',img:'08-parquet',m2:20,help:'Metros cuadrados del ambiente.'},
+    viga:{l:'Vigas o techo',img:'10-vigas',m2:8,help:'Sumá las caras que quedan a la vista.'},
     otro:{l:'Otra pieza',ancho:100,alto:100,caras:1,help:'Una medida aproximada alcanza.'}};
-  const REC={latex:{l:'Látex o pintura al agua',p:2.2},esmalte:{l:'Esmalte sintético',p:1.6},barniz:{l:'Barniz o laca vieja',p:1.3},pu:{l:'Poliuretano o plastificado',p:.6,prueba:true},nose:{l:'No sé',p:1.3,prueba:true}};
-  const DET={liso:{l:'Lisa',f:1},mold:{l:'Con molduras',f:.7},tall:{l:'Tallada o torneada',f:.45}};
-  const LUGAR={taller:{l:'Llevo la pieza al taller'},casa:{l:'A domicilio'}};
-  const money=new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
-  const S={tipo:'puerta',rec:'esmalte',det:'mold',lugar:'taller'};
-  function chips(el,name,obj,key){ el.innerHTML=Object.entries(obj).map(([k,v])=>`<label><input type="radio" name="${name}" id="${name}-${k}" value="${k}" ${S[key]===k?'checked':''}><span>${v.l}</span></label>`).join(''); el.addEventListener('change',e=>{S[key]=e.target.value; if(key==='tipo') applyTipo(); render();}); }
-  chips($('q-tipo'),'tipo',TIPOS,'tipo'); chips($('q-rec'),'rec',REC,'rec'); chips($('q-det'),'det',DET,'det'); chips($('q-lugar'),'lugar',LUGAR,'lugar');
-  $('q-zona').innerHTML=ZONAS.map(z=>`<option value="${z.id}">${z.label}${z.costo?' · traslado '+money.format(z.costo):''}</option>`).join('');
-  function applyTipo(){ const t=TIPOS[S.tipo], m=t.m2!=null; $('fs-medidas').hidden=m; $('fs-m2').hidden=!m; if(m) $('q-m2').value=t.m2; else {$('q-ancho').value=t.ancho;$('q-alto').value=t.alto;$('q-caras').value=t.caras;$('q-cant').value=1;} $('q-tipo-help').textContent=t.help; }
-  const num=(id,def)=>{const v=parseFloat(String($(id).value).replace(',','.')); return isFinite(v)&&v>0?v:def;};
-  function calc(){ const t=TIPOS[S.tipo]; let m2,desc;
-    if(t.m2!=null){m2=num('q-m2',0);desc=t.l;} else {const a=num('q-ancho',0),h=num('q-alto',0),c=+$('q-caras').value,n=Math.round(num('q-cant',1)); m2=a*h/1e4*c*n; desc=`${t.l}${n>1?' ×'+n:''} · ${a}×${h} cm`;}
-    const capas=+$('q-capas').value, r=REC[S.rec], d=DET[S.det], prod=r.p*d.f/(1+.35*(capas-1)), horas=CONFIG.preparacion+(m2>0?m2/prod:0);
-    const zona=ZONAS.find(z=>z.id===$('q-zona').value), tras=S.lugar==='casa'?zona.costo:0, r5=v=>Math.round(v/5000)*5000;
+  const REC={latex:{l:'Látex',d:'Pintura al agua, mate',p:2.2,sw:'linear-gradient(135deg,#E8E4D8,#CFCABB)'},
+    esmalte:{l:'Esmalte sintético',d:'Brillante, el clásico',p:1.6,sw:'linear-gradient(135deg,#2E6B4B,#1F4C35 60%,#3C7C5A)'},
+    barniz:{l:'Barniz o laca',d:'Ámbar, transparente',p:1.3,sw:'linear-gradient(135deg,#C7843E,#8E5420)'},
+    pu:{l:'Poliuretano',d:'Plastificado de piso',p:.6,prueba:true,sw:'linear-gradient(135deg,#F3EEE2,#D9CDB4 50%,#FFFFFF)'},
+    nose:{l:'No sé',d:'Hacemos una prueba',p:1.3,prueba:true,sw:'repeating-linear-gradient(45deg,#E1EBE4 0 10px,#CFDDD3 10px 20px)'}};
+  const DET={liso:{l:'Lisa',d:'Tablas o placas planas',f:1,ill:'linear-gradient(#D9B98F,#C9A274)'},
+    mold:{l:'Con molduras',d:'Marcos y paneles',f:.7,ill:'repeating-linear-gradient(90deg,#D9B98F 0 22px,#B88A57 22px 26px,#E6CBA5 26px 30px)'},
+    tall:{l:'Tallada o torneada',d:'Rosetas, balaustres',f:.45,ill:'radial-gradient(circle at 30% 50%,#B88A57 0 10px,transparent 11px),radial-gradient(circle at 70% 50%,#B88A57 0 10px,transparent 11px),repeating-radial-gradient(circle at 50% 50%,#D9B98F 0 6px,#C49A68 6px 9px)'}};
+  const LUGAR={taller:{l:'Llevo la pieza al taller',d:'Olivos · sin cargo'},casa:{l:'A domicilio',d:'Vamos con la máquina'}};
+  const ORDER=['tipo','rec','capas','det','medidas','lugar','res'];
+  const S={tipo:null,rec:null,capas:null,det:null,ancho:null,alto:null,caras:null,cant:1,m2:null,medidasOk:false,lugar:null,zona:null};
+  let cur=0, shownLo=0, shownHi=0;
+  const steps=[...document.querySelectorAll('.step')];
+
+  const optHtml=(k,v,key,media)=>`<button type="button" class="opt${media?'':' txt'}" data-k="${k}" data-key="${key}" aria-pressed="false">${media||''}<span>${v.l}${v.d?`<em>${v.d}</em>`:''}</span></button>`;
+  $('oTipo').innerHTML=Object.entries(TIPOS).map(([k,v])=>optHtml(k,v,'tipo',v.img?`<img src="img/${v.img}.webp" alt="" loading="lazy">`:'')).join('');
+  $('oRec').innerHTML=Object.entries(REC).map(([k,v])=>optHtml(k,v,'rec',`<i class="sw" style="background:${v.sw}"></i>`)).join('');
+  $('oDet').innerHTML=Object.entries(DET).map(([k,v])=>optHtml(k,v,'det',`<i class="ill" style="background:${v.ill}"></i>`)).join('');
+  $('oLugar').innerHTML=Object.entries(LUGAR).map(([k,v])=>optHtml(k,v,'lugar','')).join('');
+  $('oCapas').innerHTML=[1,2,3,4,5,6].map(n=>`<button type="button" data-n="${n}" aria-pressed="false">${n===6?'6+':n}</button>`).join('');
+  $('oCaras').innerHTML=[1,2].map(n=>`<button type="button" data-c="${n}" aria-pressed="false">${n} ${n>1?'caras':'cara'}</button>`).join('');
+  $('oZona').innerHTML=ZONAS.map(z=>`<button type="button" data-z="${z.id}" aria-pressed="false">${z.label}${z.costo?' · '+money.format(z.costo):''}</button>`).join('');
+
+  function press(container,attr,val){ container.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', b.dataset[attr]===String(val))); }
+  function go(i){ cur=Math.max(0,Math.min(ORDER.length-1,i)); steps.forEach(s=>s.classList.toggle('on', s.dataset.step===ORDER[cur]));
+    $('qBack').disabled=cur===0; const n=Math.min(cur+1,6); $('qStepTxt').textContent=cur===6?'Listo':`Paso ${n} de 6`; $('qProg').style.width=(cur/6*100)+'%';
+    if(ORDER[cur]==='medidas') prepMedidas(); render(); }
+  function goKey(k){ go(ORDER.indexOf(k)); }
+  const filled=k=>({tipo:!!S.tipo,rec:!!S.rec,capas:!!S.capas,det:!!S.det,medidas:S.medidasOk,lugar:!!S.lugar&&(S.lugar==='taller'||!!S.zona)})[k];
+  const nextIdx=()=>{ for(let i=cur+1;i<ORDER.length-1;i++) if(!filled(ORDER[i])) return i; return ORDER.length-1; };
+  const later=f=>setTimeout(f, reduceMotion?0:220);
+
+  document.querySelectorAll('.opts').forEach(box=>box.addEventListener('click',e=>{ const b=e.target.closest('.opt'); if(!b) return; const key=b.dataset.key;
+    S[key]=b.dataset.k; press(box,'k',b.dataset.k);
+    if(key==='tipo'){ const t=TIPOS[S.tipo]; S.medidasOk=false; S.ancho=t.ancho||null; S.alto=t.alto||null; S.caras=t.caras||null; S.cant=1; S.m2=t.m2||null; }
+    if(key==='lugar'){ $('oZona').hidden=S.lugar!=='casa'; $('lNext').hidden=S.lugar!=='casa'; if(S.lugar==='taller'){ S.zona=null; render(); later(()=>go(nextIdx())); return; } render(); return; }
+    render(); later(()=>go(nextIdx())); }));
+  $('oCapas').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; S.capas=+b.dataset.n; press($('oCapas'),'n',S.capas); render(); later(()=>go(nextIdx())); });
+  $('oCaras').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; S.caras=+b.dataset.c; press($('oCaras'),'c',S.caras); render(); });
+  $('oZona').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; S.zona=b.dataset.z; press($('oZona'),'z',S.zona); render(); });
+  $('cMinus').addEventListener('click',()=>{ S.cant=Math.max(1,S.cant-1); $('cCant').textContent=S.cant; render(); });
+  $('cPlus').addEventListener('click',()=>{ S.cant=Math.min(50,S.cant+1); $('cCant').textContent=S.cant; render(); });
+  ['q-ancho','q-alto','q-m2'].forEach(id=>$(id).addEventListener('input',()=>{ const v=parseFloat(String($(id).value).replace(',','.')); const ok=isFinite(v)&&v>0?v:null; if(id==='q-ancho')S.ancho=ok; if(id==='q-alto')S.alto=ok; if(id==='q-m2')S.m2=ok; render(); }));
+  function prepMedidas(){ const t=TIPOS[S.tipo]||TIPOS.otro, m=t.m2!=null; $('mCm').hidden=m; $('mM2').hidden=!m; $('mHelp').textContent=t.help;
+    $('mTitle').textContent=m?'¿Cuántos metros cuadrados?':'¿Cuánto mide?';
+    if(m) $('q-m2').value=S.m2??''; else { $('q-ancho').value=S.ancho??''; $('q-alto').value=S.alto??''; press($('oCaras'),'c',S.caras); $('cCant').textContent=S.cant; } }
+  $('mNext').addEventListener('click',()=>{ S.medidasOk=true; go(nextIdx()); });
+  $('lNext').addEventListener('click',()=>{ if(!S.zona){ S.zona='vl'; press($('oZona'),'z','vl'); } go(cur+1); });
+  $('qBack').addEventListener('click',()=>go(cur-1));
+  $('qRestart').addEventListener('click',()=>{ Object.assign(S,{tipo:null,rec:null,capas:null,det:null,ancho:null,alto:null,caras:null,cant:1,m2:null,medidasOk:false,lugar:null,zona:null});
+    document.querySelectorAll('.qz [aria-pressed]').forEach(b=>b.setAttribute('aria-pressed','false')); $('oZona').hidden=true; $('lNext').hidden=true; go(0); });
+
+  function calc(){ if(!S.tipo) return null; const t=TIPOS[S.tipo];
+    const m2 = t.m2!=null ? (S.m2||0) : ((S.ancho||0)*(S.alto||0)/1e4*(S.caras||1)*S.cant);
+    const r=REC[S.rec||'esmalte'], d=DET[S.det||'liso'], capas=S.capas||2, prod=r.p*d.f/(1+.35*(capas-1)), horas=CONFIG.preparacion+(m2>0?m2/prod:0);
+    const zona=ZONAS.find(z=>z.id===S.zona), tras=S.lugar==='casa'?(zona?zona.costo:null):0, r5=v=>Math.round(v/5000)*5000;
     const minimo=CONFIG.minimoHoras*CONFIG.tarifaHora, alMin=horas<=CONFIG.minimoHoras; let lo,hi;
     if(alMin){lo=hi=r5(minimo+(tras||0));} else {const b=horas*CONFIG.tarifaHora; lo=r5(Math.max(minimo,b*(1-CONFIG.margenBajo))+(tras||0)); hi=r5(b*(1+CONFIG.margenAlto)+(tras||0));}
-    return {m2,desc,capas,r,d,horas,zona,tras,lo,hi,alMin}; }
+    const desc = t.m2!=null ? `${t.l} · ${fmtNum(m2)} m²` : `${t.l}${S.cant>1?' ×'+S.cant:''} · ${S.ancho||'?'}×${S.alto||'?'} cm`;
+    return {m2,desc,r,d,capas,horas,zona,tras,lo,hi,alMin}; }
   const hfmt=h=>{const q=Math.max(1,Math.round(h*4)),hh=Math.floor(q/4),mm=(q%4)*15; return hh?`${hh} h${mm?' '+mm+' min':''}`:`${mm} min`;};
-  const rangeTxt=c=>c.lo===c.hi?money.format(c.lo):`${money.format(c.lo)} – ${money.format(c.hi)}`;
-  function render(){ $('q-capas-val').textContent=$('q-capas').value==='6'?'6+':$('q-capas').value; $('f-zona').hidden=S.lugar!=='casa'; const c=calc();
-    $('t-range').textContent=c.m2>0?rangeTxt(c):'Completá las medidas'; $('t-pieza').textContent=c.desc; $('t-m2').textContent=`${fmtNum(c.m2)} m²`; $('t-horas').textContent=hfmt(c.horas);
-    $('t-tras').textContent=S.lugar==='taller'?'Sin cargo':(c.tras==null?'A confirmar':money.format(c.tras));
-    const f=[]; if(c.alMin&&c.m2>0) f.push(`Entra en el trabajo mínimo de ${CONFIG.minimoHoras} horas. Si tenés otra pieza, la sumamos en la misma visita.`);
-    if(c.r.prueba) f.push('Con este recubrimiento hacemos una prueba en una zona oculta antes de confirmar el precio.');
-    if(S.lugar==='casa'&&c.tras==null) f.push('El traslado a tu zona lo confirmamos por WhatsApp.');
-    $('t-flag').innerHTML=f.map(x=>`<span>${x}</span>`).join(''); $('t-flag').classList.toggle('show',f.length>0);
-    $('q-wa').href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message(c))}`; }
-  function message(c){ const n=$('q-nombre').value.trim(); return [`Hola Eduardo${n?', soy '+n:''}. Quiero cotizar un decapado láser.`,`• Pieza: ${c.desc} (${fmtNum(c.m2)} m²)`,`• Recubrimiento: ${c.r.l}, ${$('q-capas').value==='6'?'6 o más':$('q-capas').value} manos`,`• Superficie: ${c.d.l}`,`• Lugar: ${S.lugar==='taller'?'Llevo la pieza al taller':'A domicilio, '+c.zona.label}`,`• Estimado de la web: ${rangeTxt(c)}`,`Te mando fotos por acá.`].join('\n'); }
-  ['q-ancho','q-alto','q-caras','q-cant','q-m2','q-capas','q-zona','q-nombre'].forEach(id=>$(id).addEventListener('input',render));
-  $('qform').addEventListener('submit',e=>e.preventDefault());
-  $('q-copy').addEventListener('click',()=>{ const txt=message(calc()), ok=()=>{$('q-copied').textContent='Copiado. Pegalo en WhatsApp.';};
+  const rangeTxt=(lo,hi)=>lo===hi?money.format(lo):`${money.format(lo)} – ${money.format(hi)}`;
+  function animPrice(lo,hi){ const el1=$('sPrice'), el2=$('rPrice'); const fromLo=shownLo, fromHi=shownHi; shownLo=lo; shownHi=hi;
+    if(reduceMotion||!fromLo){ el1.textContent=el2.textContent=rangeTxt(lo,hi); return; }
+    const t0=performance.now(); (function step(now){ const k=Math.min(1,(now-t0)/450), e=1-Math.pow(1-k,3); const a=Math.round((fromLo+(lo-fromLo)*e)/1000)*1000, b=Math.round((fromHi+(hi-fromHi)*e)/1000)*1000;
+      el1.textContent=el2.textContent=rangeTxt(k<1?a:lo,k<1?b:hi); if(k<1) requestAnimationFrame(step); })(t0); }
+  function row(key,label,val){ return `<button type="button" data-go="${key}" class="${val?'':'empty'}"><span>${label}</span><span>${val||'Elegir'}</span></button>`; }
+  function render(){ const c=calc();
+    if(!c){ $('sPrice').textContent='Elegí la pieza'; shownLo=shownHi=0; } else animPrice(c.lo,c.hi);
+    $('sList').innerHTML=[
+      row('tipo','Pieza',S.tipo&&TIPOS[S.tipo].l),
+      row('rec','Recubrimiento',S.rec&&REC[S.rec].l),
+      row('capas','Manos',S.capas&&(S.capas===6?'6 o más':S.capas)),
+      row('det','Superficie',S.det&&DET[S.det].l),
+      row('medidas','Medidas',S.medidasOk&&c?(TIPOS[S.tipo].m2!=null?`${fmtNum(c.m2)} m²`:`${S.ancho}×${S.alto} cm · ${S.caras} ${S.caras>1?'caras':'cara'}${S.cant>1?' · ×'+S.cant:''}`):''),
+      row('lugar','Lugar',S.lugar&&(S.lugar==='taller'?'Taller en Olivos':'Domicilio'+(c&&c.zona?' · '+c.zona.label:''))),
+    ].join('');
+    if(c){ $('rSub').textContent=`${fmtNum(c.m2)} m² · unas ${hfmt(c.horas)} de láser · ${S.lugar==='casa'?(c.tras==null?'traslado a confirmar':'traslado '+money.format(c.tras)):'en el taller, sin traslado'}`;
+      const f=[]; if(c.alMin&&c.m2>0) f.push(`Entra en el trabajo mínimo de ${CONFIG.minimoHoras} horas. Si tenés otra pieza, la sumamos en la misma visita.`);
+      if(c.r.prueba) f.push('Con este recubrimiento hacemos una prueba en una zona oculta antes de confirmar.');
+      if(S.lugar==='casa'&&c.tras==null) f.push('El traslado a tu zona lo confirmamos por WhatsApp.');
+      $('rFlags').innerHTML=f.map(x=>`<span>${x}</span>`).join('');
+      $('q-wa').href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message(c))}`; } }
+  function message(c){ const n=$('q-nombre').value.trim(); return [`Hola Eduardo${n?', soy '+n:''}. Quiero cotizar un decapado láser.`,`• Pieza: ${c.desc} (${fmtNum(c.m2)} m²)`,`• Recubrimiento: ${c.r.l}, ${S.capas===6?'6 o más':(S.capas||'?')} manos`,`• Superficie: ${c.d.l}`,`• Lugar: ${S.lugar==='casa'?'A domicilio, '+(c.zona?c.zona.label:'a confirmar'):'Llevo la pieza al taller'}`,`• Estimado de la web: ${rangeTxt(c.lo,c.hi)}`,`Te mando fotos por acá.`].join('\n'); }
+  $('sList').addEventListener('click',e=>{ const b=e.target.closest('[data-go]'); if(b) goKey(b.dataset.go); });
+  $('q-nombre').addEventListener('input',render);
+  $('q-copy').addEventListener('click',()=>{ const c=calc(); if(!c) return; const txt=message(c), ok=()=>{$('q-copied').textContent='Copiado. Pegalo en WhatsApp.';};
     const fb=()=>{const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); ok();}catch(_){$('q-copied').textContent='No se pudo copiar.';} ta.remove();};
     try{navigator.clipboard.writeText(txt).then(ok).catch(fb);}catch(_){fb();} });
-  applyTipo(); render();
+  go(0);
 })();
 </script>
 
