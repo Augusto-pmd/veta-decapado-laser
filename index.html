@@ -5,910 +5,386 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Veta Decapado Láser</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Decapado láser de madera en Olivos. Sacamos la pintura sin lija, sin químicos y sin perder un milímetro de madera. Cotizá online.">
+<meta name="description" content="Decapado láser de madera en Olivos. Sacamos la pintura sin lija, sin químicos y sin perder madera. Cotizá online.">
 <meta property="og:title" content="Veta · Decapado láser de madera">
 <meta property="og:description" content="Sacamos la pintura. La madera queda. Taller en Olivos, cotizá online.">
 <meta property="og:image" content="https://augusto-pmd.github.io/veta-decapado-laser/og.jpg">
 <meta property="og:url" content="https://augusto-pmd.github.io/veta-decapado-laser/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: recorrido de scroll. Portada fija donde el haz decapa la puerta → franja en movimiento → manifiesto → galería horizontal → probalo vos → método (claro) → cómo trabajamos (fijo) → máquina + video → cotizador → taller → pie con logo gigante. Diseño oscuro deliberado, de un solo tema. */
+/* Layout: página clara y corta. Portada con la puerta real que se decapa con el cursor → qué restauramos → por qué láser (bloque verde) → cotizador → contacto (bloque verde). */
 :root{
-  color-scheme:dark;
-  --night:#0A0F0C; --night-2:#111914; --ink:#EEF2EC; --mute:#97A59B; --line:rgba(238,242,236,.14);
-  --green:#1F5A3E; --green-2:#2B7A54; --beam:#FF3B24; --wood:#E3A469;
-  --paper:#EDF0EA; --paper-ink:#0F1712; --paper-mute:#55635A; --paper-line:#C9D1CA;
-  --f-stencil:'Big Shoulders Stencil Display','Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
+  color-scheme:light;
+  --bg:#F2F5F1; --card:#FFFFFF; --ink:#14251C; --mute:#5B6B61; --line:#D3DDD5;
+  --green:#1F5A3E; --green-2:#2A7351; --green-soft:#E1EBE4; --on-green:#F2F7F3;
+  --beam:#E0301E; --wood:#A5672F;
   --f-display:'Big Shoulders Display',Impact,'Arial Narrow',sans-serif;
   --f-body:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --f-mono:'Martian Mono',ui-monospace,Consolas,monospace;
-  --r:4px;
+  --r:10px;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{background:var(--night)}
-body{background:var(--night);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
 h1,h2,h3{margin:0;text-wrap:balance} p{margin:0} a{color:inherit}
 :focus-visible{outline:2px solid var(--beam);outline-offset:3px}
-.wrap{max-width:1320px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-.btn{display:inline-flex;align-items:center;gap:10px;font:600 15px/1 var(--f-body);padding:15px 22px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:var(--night);text-decoration:none;cursor:pointer;transition:transform .2s,background .2s,color .2s}
-.btn:hover{transform:translateY(-2px)}
-.btn.beam{background:var(--beam);border-color:var(--beam);color:#fff}
-.btn.ghost{background:transparent;color:var(--ink)}
-.big{font-family:var(--f-display);font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:.005em}
-.sten{font-family:var(--f-stencil);font-weight:800;text-transform:uppercase;line-height:.86}
-
-/* Loader */
-.loader{position:fixed;inset:0;z-index:100;background:var(--night);display:grid;place-items:center;animation:loaderOut .7s cubic-bezier(.7,0,.2,1) 1.5s forwards;pointer-events:none}
-.loader svg{width:min(60vw,420px);height:auto}
-.loader .lz{transform-origin:left center;animation:beamIn 1s cubic-bezier(.6,0,.2,1) .15s both}
-.loader .lw{animation:fadeW .5s ease .7s both}
-@keyframes beamIn{from{transform:scaleX(0)}}
-@keyframes fadeW{from{opacity:0}}
-@keyframes loaderOut{to{transform:translateY(-100%);visibility:hidden}}
-
-/* Cursor */
-.cursor{position:fixed;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;z-index:90;pointer-events:none;transition:width .25s,height .25s,margin .25s,opacity .2s;opacity:0}
-.cursor::before{content:"";position:absolute;inset:0;border:1.5px solid var(--beam);border-radius:50%}
-.cursor i{position:absolute;background:var(--beam)}
-.cursor i:nth-child(1){left:50%;top:-8px;width:1.5px;height:10px;margin-left:-.75px}
-.cursor i:nth-child(2){left:50%;bottom:-8px;width:1.5px;height:10px;margin-left:-.75px}
-.cursor i:nth-child(3){top:50%;left:-8px;height:1.5px;width:10px;margin-top:-.75px}
-.cursor i:nth-child(4){top:50%;right:-8px;height:1.5px;width:10px;margin-top:-.75px}
-.cursor b{position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;background:var(--beam)}
-.cursor.on{opacity:1}.cursor.hov{width:70px;height:70px;margin:-35px 0 0 -35px}
-@media (hover:none){.cursor{display:none}}
-@media (hover:hover){body.has-cursor, body.has-cursor a, body.has-cursor button, body.has-cursor label{cursor:none}}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.disp{font-family:var(--f-display);font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:.005em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--f-body);padding:15px 22px;border-radius:999px;border:2px solid var(--green);background:var(--green);color:var(--on-green);text-decoration:none;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:var(--green-2);border-color:var(--green-2);transform:translateY(-1px)}
+.btn.line{background:transparent;color:var(--green)}
+.btn.line:hover{background:var(--green-soft)}
+section{padding-block:clamp(56px,8vw,96px)}
+.head{display:grid;gap:10px;margin-bottom:32px;max-width:640px}
+.head h2{font-size:clamp(38px,5vw,60px)}
+.head p{color:var(--mute)}
 
 /* Header */
-header.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
-header.top.solid{background:rgba(10,15,12,.82);backdrop-filter:blur(12px);border-color:var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:28px;padding-block:14px}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
-.logo svg{height:28px;width:auto;display:block}
-.logo span{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-nav.main{display:flex;gap:26px;margin-left:auto;font-size:14px}
-nav.main a{text-decoration:none;color:var(--mute);transition:color .2s}
-nav.main a:hover{color:var(--ink)}
-header.top .btn{padding:11px 16px;font-size:14px}
-@media (max-width:900px){nav.main{display:none} header.top .btn{margin-left:auto}}
-@media (max-width:440px){.logo span{display:none}}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(242,245,241,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:24px;padding-block:12px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo svg{height:30px;width:auto;display:block}
+nav{display:flex;gap:24px;margin-left:auto;font-size:15px}
+nav a{text-decoration:none;color:var(--mute)} nav a:hover{color:var(--ink)}
+header .btn{padding:11px 18px;font-size:15px}
+@media (max-width:820px){nav{display:none} header .btn{margin-left:auto}}
 
-/* 1 · Portada que decapa con el scroll */
-#story{height:340vh;position:relative}
-.stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(16px,3vw,48px);padding:80px max(20px,env(safe-area-inset-right,0px)) 70px max(20px,env(safe-area-inset-left,0px))}
-.stick::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 50%,rgba(43,122,84,.22),transparent 70%);pointer-events:none}
-.s-left,.s-right{position:relative;z-index:3;will-change:transform,opacity}
-.s-left h1{font-size:clamp(44px,min(7.6vw,13vh),132px)}
-.s-left p{margin-top:22px;color:var(--mute);font-size:17px;max-width:32ch}
-.s-right{justify-self:end;text-align:right}
-.s-right h2{font-size:clamp(44px,min(7.6vw,13vh),132px);color:var(--wood)}
-.s-right .cta{margin-top:26px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-.doorbox{position:relative;height:60vh;aspect-ratio:880/1168;z-index:2;justify-self:center;align-self:center}
-.doorbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2px;display:block}
-.doorbox .paint{clip-path:inset(var(--cut,0%) 0 0 0)}
-.doorbox .shade{position:absolute;inset:0;box-shadow:0 60px 120px -40px rgba(0,0,0,.8);pointer-events:none}
-.laser{position:absolute;left:-14%;right:-14%;top:var(--cut,0%);height:2px;background:var(--beam);box-shadow:0 0 8px 2px rgba(255,59,36,.9),0 0 30px 6px rgba(255,80,40,.45);opacity:var(--lz,0);transform:translateY(-1px);z-index:4}
-.laser::after{content:"";position:absolute;right:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--beam);box-shadow:0 0 14px 4px rgba(255,59,36,.8)}
-.sparks{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none}
-.hud{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;flex-wrap:wrap;gap:8px 32px;align-items:center;padding:16px max(20px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));font:400 11px/1.2 var(--f-mono);color:var(--mute);letter-spacing:.06em;text-transform:uppercase;border-top:1px solid var(--line)}
-.hud b{color:var(--ink);font-weight:500}
-.hud .bar{flex:1 1 160px;height:2px;background:var(--line);position:relative;min-width:120px}
-.hud .bar i{position:absolute;left:0;top:0;bottom:0;width:var(--pct,0%);background:var(--beam)}
-.hint{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;font:400 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);transition:opacity .4s}
-.hint span{width:22px;height:34px;border:1.5px solid var(--mute);border-radius:12px;position:relative}
-.hint span::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--beam);animation:wheel 1.6s infinite}
-@keyframes wheel{60%{transform:translateY(9px);opacity:0}}
-@media (max-width:860px){
-  .stick{grid-template-columns:1fr;grid-template-rows:auto 1fr;justify-items:center;text-align:center;padding-top:72px;padding-bottom:58px;gap:12px}
-  .s-left,.s-right{grid-row:1;grid-column:1;justify-self:center;text-align:center}
-  .s-left h1,.s-right h2{font-size:clamp(34px,min(11vw,7.5vh),64px)}
-  .s-left p{display:none}
-  .s-right .cta{display:none}
-  .doorbox{grid-row:2}
-  .stick{padding-bottom:104px}
-  .hud .hz{display:none}
-  .hint{bottom:auto;top:calc(100% - 150px);flex-direction:row;font-size:10px}
-  .hint span{width:16px;height:26px}
-}
-
-/* 2 · Franja en movimiento */
-.marquee{background:var(--green);overflow:hidden;padding-block:clamp(18px,3vw,34px);border-block:1px solid rgba(255,255,255,.08)}
-.mq-row{display:flex;white-space:nowrap;will-change:transform}
-.mq-row span{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(44px,8vw,120px);line-height:1;padding-right:.35em;display:inline-flex;align-items:center;gap:.35em}
-.mq-row span::after{content:"";width:.22em;height:.22em;border-radius:50%;background:var(--beam);display:inline-block}
-.mq-row.out span{color:transparent;-webkit-text-stroke:1.5px rgba(238,242,236,.55)}
-
-/* 3 · Manifiesto */
-.manif{padding-block:clamp(90px,14vw,200px)}
-.manif p.words{font-family:var(--f-display);font-weight:600;font-size:clamp(34px,5.2vw,82px);line-height:1.02;letter-spacing:.005em;max-width:20ch;text-transform:uppercase}
-.manif .w{color:var(--ink);opacity:.16;transition:opacity .25s}
-.manif .w.lit{opacity:1}
-.manif .w.hot{color:var(--wood)}
-.manif .sign{margin-top:40px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-
-/* 4 · Galería horizontal */
-#galeria{position:relative;height:640vh}
-.g-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;padding-top:86px}
-.g-head{position:relative;z-index:3}
-.g-head .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
-.g-head h2{font-size:clamp(28px,3.4vw,46px)}
-.g-count{font:500 13px/1 var(--f-mono);color:var(--mute)}
-.g-count b{color:var(--ink);font-weight:500}
-.g-track{display:flex;gap:4vw;padding-left:max(20px,calc((100vw - 1320px)/2 + 20px));padding-right:12vw;will-change:transform;margin-top:22px}
-.panel{flex:0 0 auto;width:min(64vw,880px);position:relative}
-.panel .ph{height:calc(100svh - 330px);min-height:240px;overflow:hidden;border-radius:var(--r);position:relative;background:var(--night-2)}
-.panel img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12);will-change:transform}
-.panel h3{position:absolute;left:-.04em;top:calc(100svh - 330px - .62em);font-size:clamp(56px,7.6vw,130px);z-index:2;pointer-events:none;text-shadow:0 10px 40px rgba(0,0,0,.5)}
-.panel .meta{display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:8px;margin-top:18px;margin-left:auto;max-width:36ch}
-.panel .meta p{color:var(--mute);font-size:15px}
-.panel .meta span{font:500 11px/1.4 var(--f-mono);color:var(--wood);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
-@media (max-width:760px){
-  #galeria{height:auto}
-  .g-stick{position:relative;height:auto;padding-block:90px 60px}
-  .g-head{position:relative;top:0}
-  .g-track{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important;padding-right:20px;gap:16px;scrollbar-width:none}
-  .g-track::-webkit-scrollbar{display:none}
-  .panel{width:82vw;scroll-snap-align:start}
-  .panel .ph{height:56svh}
-  .panel h3{top:calc(56svh - .62em);font-size:clamp(46px,14vw,64px)}
-  .panel .meta{margin-top:34px;max-width:none}
-}
-
-/* 5 · Probalo vos (portón interactivo) */
-.try{background:var(--night-2);padding-block:clamp(70px,10vw,140px)}
-.try-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
-.try-head h2{font-size:clamp(48px,7vw,110px)}
-.try-head p{color:var(--mute);max-width:36ch}
-.door{position:relative;width:100%;aspect-ratio:2.25/1;max-height:600px;border-radius:var(--r);overflow:hidden;background:#21513A;cursor:none;touch-action:pan-y}
-.door canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-@media (max-width:640px){.door{aspect-ratio:1.15/1}}
-@media (hover:none){.door{cursor:auto}}
-.d-hint{position:absolute;left:16px;bottom:16px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(10,15,12,.75);color:var(--ink);font:500 13px/1.2 var(--f-body);backdrop-filter:blur(6px);pointer-events:none;transition:opacity .5s}
-.d-hint i{width:10px;height:10px;border-radius:50%;background:var(--beam);box-shadow:0 0 0 4px rgba(255,59,36,.25)}
+/* Portada */
+.hero{padding-block:clamp(28px,5vw,56px)}
+.hero-grid{display:grid;grid-template-columns:1fr minmax(0,520px);gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(52px,7.4vw,104px)}
+.hero h1 span{display:block;color:var(--green)}
+.hero .lead{margin-top:20px;font-size:19px;color:var(--mute);max-width:40ch}
+.hero .cta{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap}
+.pills{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
+.pills span{padding:8px 14px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:14px;font-weight:600}
+.stage{background:var(--green);border-radius:18px;padding:clamp(16px,2.4vw,26px);display:grid;gap:14px}
+.door{position:relative;width:100%;aspect-ratio:880/1168;max-height:72vh;margin-inline:auto;border-radius:6px;overflow:hidden;cursor:crosshair;touch-action:pan-y;background:#2a3b31}
+@media (max-width:880px){.door{max-height:none}}
+.door img,.door canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.door img{object-fit:cover}
+.d-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(20,37,28,.82);color:#fff;font-size:14px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .4s}
+.d-hint i{width:10px;height:10px;border-radius:50%;background:var(--beam);box-shadow:0 0 0 4px rgba(224,48,30,.3)}
 .d-hint.gone{opacity:0}
-.readout{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px;padding-top:16px;font:400 12px/1.3 var(--f-mono);color:var(--mute)}
-.readout b{color:var(--ink);font-weight:500}
-.readout button{margin-left:auto;font:500 12px/1 var(--f-mono);background:none;border:1px solid var(--line);color:var(--ink);padding:10px 14px;border-radius:999px;cursor:pointer}
-.readout button:hover{border-color:var(--ink)}
+.d-bar{display:flex;align-items:center;gap:14px;color:var(--on-green);font-size:14px}
+.meter{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:#F2B07A;transition:width .2s}
+.d-bar button{font:600 13px/1 var(--f-body);background:transparent;border:1.5px solid rgba(255,255,255,.4);color:var(--on-green);padding:9px 14px;border-radius:999px;cursor:pointer}
+.d-bar button:hover{border-color:#fff}
+.done{display:none;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;color:var(--on-green);font-weight:600}
+.done.show{display:flex}
+.done a{background:#fff;color:var(--green);border-color:#fff;padding:10px 16px;font-size:14px}
 
-/* 6 · Método (sección clara) */
-.light{background:var(--paper);color:var(--paper-ink)}
-.light .eyebrow{color:var(--paper-mute)}
-.metodo{padding-block:clamp(80px,11vw,160px)}
-.m-head{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:48px}
-.m-head h2{font-size:clamp(52px,7.4vw,120px)}
-.m-head p{color:var(--paper-mute);font-size:17px;max-width:44ch}
-@media (max-width:860px){.m-head{grid-template-columns:1fr}}
-.cmp{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
-@media (max-width:1040px){.cmp{grid-template-columns:1fr}}
-.tabs{display:inline-flex;border:1.5px solid var(--paper-ink);border-radius:999px;overflow:hidden;margin-bottom:18px}
-.tabs button{font:600 15px/1 var(--f-body);padding:13px 22px;background:transparent;color:var(--paper-ink);border:0;cursor:pointer;transition:background .2s,color .2s}
-.tabs button[aria-pressed="true"]{background:var(--paper-ink);color:var(--paper)}
-.xsec{width:100%;height:auto;display:block;background:#FFFFFF;border:1px solid var(--paper-line);border-radius:var(--r)}
-.xsec text{font-family:var(--f-mono);font-size:11px;fill:var(--paper-mute)}
-.xsec .lbl-strong{fill:var(--paper-ink);font-weight:500}
-.xsec .layer{transition:transform .7s cubic-bezier(.6,0,.2,1),opacity .6s;transform-box:fill-box;transform-origin:50% 100%}
-.xsec .fade{transition:opacity .6s}
-.m-lija .layer,.m-laser .layer{transform:scaleY(0)}
-.m-quim .layer{opacity:0}
-.xsec .lost{fill:#B5793F;transition:opacity .6s}
-.m-lija .lost{opacity:0}
-.xsec .soak{opacity:0}.m-quim .soak{opacity:.45}
-.xsec .dust,.xsec .gooblob,.xsec .beamline,.xsec .bracket{opacity:0}
-.m-lija .dust,.m-lija .bracket{opacity:1}.m-quim .gooblob{opacity:1}.m-laser .beamline{opacity:1}
-.xcap{margin-top:14px;font-size:16px;color:var(--paper-mute);min-height:3.2em}
-.xcap b{color:var(--paper-ink)}
-.tbl{overflow-x:auto}
-table.facts{width:100%;border-collapse:collapse;font-size:14px}
-table.facts th,table.facts td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--paper-line);vertical-align:top}
-table.facts thead th{font:500 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute)}
-table.facts tbody th{font-weight:600;width:32%}
-table.facts td{color:var(--paper-mute);transition:background .3s,color .3s}
-table.facts .on{background:rgba(255,59,36,.1);color:var(--paper-ink)}
+/* Qué restauramos */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.grid3{grid-template-columns:1fr}}
+.piece{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.piece .ph{aspect-ratio:4/3;overflow:hidden}
+.piece img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.piece:hover img{transform:scale(1.04)}
+.piece div.t{padding:14px 16px 16px;display:grid;gap:2px}
+.piece h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:26px;line-height:1}
+.piece p{font-size:14px;color:var(--mute)}
 
-/* 7 · Cómo trabajamos (scope fijo) */
-.como{padding-block:clamp(80px,11vw,160px)}
-.como-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:start}
-@media (max-width:900px){.como-grid{grid-template-columns:1fr}}
-.scope-wrap{position:sticky;top:110px}
-@media (max-width:900px){.scope-wrap{position:relative;top:0}}
-.como h2{font-size:clamp(52px,7vw,110px);margin-bottom:28px}
-.scope{background:#070B09;border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:14px}
-.scope-top{display:flex;justify-content:space-between;font:400 11px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.scope canvas{width:100%;aspect-ratio:1.4/1;display:block;border-radius:2px;background:#050806}
-.modes{display:flex;flex-wrap:wrap;gap:6px}
-.modes button{font:500 12px/1 var(--f-mono);padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
-.modes button[aria-pressed="true"]{background:var(--beam);border-color:var(--beam);color:#fff}
-.scope p{font-size:14px;color:var(--mute);min-height:3em}
-.scope p b{color:var(--ink)}
-ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
-ol.steps li{counter-increment:s;min-height:62vh;display:flex;flex-direction:column;justify-content:center;gap:14px;border-top:1px solid var(--line);opacity:.35;transition:opacity .4s}
-ol.steps li.on{opacity:1}
-ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--f-display);font-weight:800;font-size:clamp(60px,7vw,110px);line-height:.9;color:var(--beam)}
-ol.steps h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(30px,3.2vw,46px);line-height:.95}
-ol.steps p{color:var(--mute);font-size:17px;max-width:42ch}
-@media (max-width:900px){ol.steps li{min-height:auto;padding-block:36px;opacity:1}}
-
-/* 8 · La máquina */
-.maq{background:var(--night-2);padding-block:clamp(80px,11vw,160px)}
-.maq-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,5vw,80px);align-items:center}
-@media (max-width:900px){.maq-grid{grid-template-columns:1fr}}
-.vid{aspect-ratio:3/4;max-height:720px;border-radius:var(--r);overflow:hidden;background:#000;position:relative}
+/* Por qué láser */
+.green{background:var(--green);color:var(--on-green)}
+.green .head p{color:rgba(242,247,243,.75)}
+.why{display:grid;grid-template-columns:1fr minmax(0,400px);gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:880px){.why{grid-template-columns:1fr}}
+.points{display:grid;gap:0}
+.points div{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;padding:20px 0;border-top:1px solid rgba(255,255,255,.18)}
+.points div:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
+.points b{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;color:#F2B07A;grid-row:span 2;min-width:5.2ch}
+.points h3{font-size:19px}
+.points p{color:rgba(242,247,243,.78);font-size:16px}
+.vid{border-radius:14px;overflow:hidden;aspect-ratio:3/4;background:#0d1a13;position:relative}
 .vid video{width:100%;height:100%;object-fit:cover;display:block}
-.vid .tag{position:absolute;left:12px;top:12px;padding:7px 11px;border-radius:999px;background:rgba(10,15,12,.75);font:500 11px/1 var(--f-mono);color:var(--ink)}
-.maq h2{font-size:clamp(48px,6.4vw,100px);margin-bottom:34px}
-.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
-.specs div{padding:22px 4px 22px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
-.specs div:nth-child(odd){padding-right:20px;border-right:1px solid var(--line)}
-.specs div:nth-child(even){padding-left:20px}
-.specs b{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,4.6vw,68px);line-height:1;font-variant-numeric:tabular-nums}
-.specs span{font-size:14px;color:var(--mute)}
-.maq .note{margin-top:22px;font-size:12px;color:var(--mute)}
+.vid span{position:absolute;left:12px;top:12px;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:12px}
 
-/* 9 · Cotizador */
-.cot{padding-block:clamp(80px,11vw,160px)}
-.cot-head{margin-bottom:44px;display:grid;gap:14px}
-.cot-head h2{font-size:clamp(52px,7.4vw,120px)}
-.cot-head p{color:var(--mute);max-width:52ch;font-size:17px}
-.quote{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
-@media (max-width:980px){.quote{grid-template-columns:1fr}}
-.q-form{display:grid;gap:30px}
-fieldset{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
-legend{padding:0;font-weight:700;font-size:16px;margin-bottom:10px;display:flex;gap:10px;align-items:baseline}
+/* Cotizador */
+.quote{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
+@media (max-width:960px){.quote{grid-template-columns:1fr}}
+.q-form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,28px);display:grid;gap:24px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+legend{padding:0;font-weight:700;font-size:16px;margin-bottom:8px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips label{position:relative}
 .chips input{position:absolute;opacity:0;pointer-events:none}
-.chips span{display:inline-flex;align-items:center;padding:11px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:14px;cursor:pointer;transition:border-color .15s,background .15s,color .15s;background:transparent;color:var(--ink)}
-.chips label:hover span{border-color:var(--mute)}
-.chips input:checked + span{border-color:var(--ink);background:var(--ink);color:var(--night)}
+.chips span{display:inline-flex;padding:10px 15px;border:1.5px solid var(--line);border-radius:999px;font-size:15px;cursor:pointer;background:var(--card);transition:all .15s}
+.chips label:hover span{border-color:var(--green)}
+.chips input:checked + span{border-color:var(--green);background:var(--green);color:var(--on-green)}
 .chips input:focus-visible + span{outline:2px solid var(--beam);outline-offset:2px}
 .dims{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:560px){.dims{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.field{display:grid;gap:6px;min-width:0}
-.field label{font:400 11px/1.2 var(--f-mono);color:var(--mute);letter-spacing:.04em}
-.field input,.field select{width:100%;font:500 16px/1.2 var(--f-body);padding:12px 13px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--night-2);color:var(--ink);font-variant-numeric:tabular-nums}
-.field input:focus,.field select:focus{border-color:var(--ink);outline:none}
+.field{display:grid;gap:5px;min-width:0}
+.field label{font-size:13px;color:var(--mute)}
+.field input,.field select{width:100%;font:500 16px/1.2 var(--f-body);padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.field input:focus,.field select:focus{border-color:var(--green);outline:none}
 .help{font-size:13px;color:var(--mute)}
-.range-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
-input[type=range]{width:100%;accent-color:var(--beam)}
-.range-val{font-family:var(--f-display);font-weight:800;font-size:32px;min-width:3ch;text-align:right}
-.ticket{position:sticky;top:96px;background:var(--paper);color:var(--paper-ink);border-radius:var(--r);padding:26px 24px 24px;display:grid;gap:18px}
-@media (max-width:980px){.ticket{position:static}}
-.ticket .t-head{display:flex;justify-content:space-between;gap:12px;font:400 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--paper-mute);padding-bottom:16px;border-bottom:2px dashed var(--paper-line)}
-.t-price{display:grid;gap:6px}
-.t-price b{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,3.8vw,50px);line-height:1;font-variant-numeric:tabular-nums}
-.t-price span{font-size:13px;color:var(--paper-mute)}
-.t-rows div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--paper-line);font-size:14px}
-.t-rows div span:first-child{color:var(--paper-mute)}
-.t-rows div span:last-child{font:400 13px/1.4 var(--f-mono);text-align:right}
-.t-bar{display:grid;gap:6px}
-.t-bar .cells{display:flex;flex-wrap:wrap;gap:3px}
-.t-bar .cells i{width:10px;height:14px;border-radius:1px;background:var(--beam)}
-.t-bar .cells i.half{opacity:.4}
-.fine{font-size:12px;color:var(--paper-mute)}
-.t-flag{display:none;gap:10px;padding:12px 14px;border-radius:var(--r);background:rgba(200,110,20,.14);font-size:14px}
+.range-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--green)}
+.range-val{font-family:var(--f-display);font-weight:800;font-size:30px;min-width:2.5ch;text-align:right;color:var(--green)}
+.ticket{position:sticky;top:84px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media (max-width:960px){.ticket{position:static}}
+.t-top{background:var(--green);color:var(--on-green);padding:20px 22px;display:grid;gap:6px}
+.t-top small{font-size:13px;opacity:.8}
+.t-top b{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,4vw,46px);line-height:1;font-variant-numeric:tabular-nums}
+.t-body{padding:18px 22px 22px;display:grid;gap:14px}
+.t-rows div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.t-rows div span:first-child{color:var(--mute)}
+.t-rows div span:last-child{text-align:right;font-weight:600}
+.t-flag{display:none;gap:8px;padding:12px 14px;border-radius:8px;background:#FBF0E2;color:#6B4210;font-size:14px}
 .t-flag.show{display:grid}
-.t-actions{display:grid;gap:10px}
-.t-actions .field label{color:var(--paper-mute)}
-.t-actions .field input{background:#FFFFFF;color:var(--paper-ink);border-color:var(--paper-line)}
-.t-actions .row{display:grid;grid-template-columns:1fr auto;gap:8px}
-.t-actions .btn{justify-content:center}
-.t-actions .btn.ghost{color:var(--paper-ink);border-color:var(--paper-ink)}
-.copied{font-size:13px;color:#2C7348;min-height:1em}
+.t-body .row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.fine{font-size:13px;color:var(--mute)}
+.copied{font-size:13px;color:var(--green-2);min-height:1em}
 
-/* 10 · Taller */
-.taller{position:relative;min-height:92vh;display:flex;align-items:flex-end;overflow:hidden}
-.taller .bg{position:absolute;inset:0;background:url(img/05-taller-a.webp) center/cover;transform:scale(1.1);will-change:transform}
-.taller::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,12,.2) 0%,rgba(10,15,12,.55) 45%,rgba(10,15,12,.96) 100%)}
-.taller .wrap{position:relative;z-index:2;width:100%;padding-block:80px 60px}
-.taller h2{font-size:clamp(90px,17vw,280px);line-height:.8}
-.t-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;align-items:end}
-@media (max-width:860px){.t-grid{grid-template-columns:1fr}}
-.t-grid p{color:#C7D2CA;font-size:18px;max-width:42ch}
-.contact{margin:0;display:grid;gap:0;width:100%;max-width:440px}
-.contact div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
-.contact dt{font:400 11px/1.6 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
-.contact dd{margin:0;font-weight:500}
-.contact a{color:var(--ink);text-decoration-color:var(--beam);text-underline-offset:3px}
-.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:10px;padding:13px 18px;border-radius:999px;background:var(--beam);color:#fff;text-decoration:none;font:600 14px/1 var(--f-body);box-shadow:0 12px 30px -10px rgba(255,59,36,.6);transition:transform .2s,opacity .3s}
-.wa-float:hover{transform:translateY(-2px)}
-.wa-float i{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.3)}
-.wa-float.off{opacity:0;pointer-events:none}
-.zones div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
-.zones div:first-child{border-top:1px solid var(--line)}
-.zones span:last-child{font:400 13px/1.4 var(--f-mono);color:var(--mute);text-align:right}
-
-/* 11 · FAQ + pie */
-.faq{padding-block:clamp(80px,10vw,140px)}
-.faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:48px}
-@media (max-width:860px){.faq-grid{grid-template-columns:1fr}}
-.faq h2{font-size:clamp(48px,6vw,96px)}
-.faq details{border-bottom:1px solid var(--line)}
-.faq details:first-child{border-top:1px solid var(--line)}
-.faq summary{cursor:pointer;list-style:none;padding:22px 0;font-weight:600;font-size:18px;display:flex;justify-content:space-between;gap:20px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--beam);transition:transform .2s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{padding-bottom:22px;color:var(--mute);max-width:60ch}
-footer{padding-block:40px calc(30px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);overflow:hidden}
-footer .giant{width:100%;height:auto;display:block;margin-bottom:34px}
-footer .row{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:13px;color:var(--mute)}
-
-.reveal{transform:translateY(40px);transition:transform 1s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.loader{display:none}.reveal{transform:none}}
+/* Contacto */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:center}
+@media (max-width:860px){.contact-grid{grid-template-columns:1fr}}
+.contact-grid h2{font-size:clamp(52px,7vw,96px)}
+.contact-grid .lead{margin-top:14px;color:rgba(242,247,243,.8);max-width:40ch}
+.contact-grid .btns{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+.green .btn{background:#fff;color:var(--green);border-color:#fff}
+.green .btn.line{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.green .btn.line:hover{background:rgba(255,255,255,.1)}
+dl{margin:0;display:grid;background:rgba(255,255,255,.07);border-radius:14px;padding:6px 20px}
+dl div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+dl div:last-child{border-bottom:0}
+dt{color:rgba(242,247,243,.65);font-size:14px} dd{margin:0;font-weight:600}
+dd a{color:#fff}
+footer{padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
+footer svg{height:22px;width:auto}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
-<div class="loader" aria-hidden="true">
-  <svg viewBox="-26 -8 352 116"><defs><clipPath id="ld-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="ld-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#EEF2EC" stroke-width="2.6"/></pattern></defs><g class="lw" clip-path="url(#ld-k)"><rect width="300" height="51" fill="#EEF2EC"/><rect y="57" width="300" height="43" fill="url(#ld-g)"/></g><g class="lz"><line x1="-26" y1="54" x2="318" y2="54" stroke="#FF3B24" stroke-width="2.4"/><circle cx="320" cy="54" r="5" fill="#FF3B24"/></g></svg>
-</div>
-<div class="cursor" id="cursor" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
-
-<header class="top" id="top">
+<header>
   <div class="wrap">
-    <a class="logo" href="#inicio" aria-label="Veta, inicio"><svg viewBox="-26 -8 352 116" aria-hidden="true"><defs><clipPath id="lg-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="lg-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#EEF2EC" stroke-width="3.4"/></pattern></defs><g clip-path="url(#lg-k)"><rect width="300" height="51" fill="#EEF2EC"/><rect y="57" width="300" height="43" fill="url(#lg-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#FF3B24" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#FF3B24"/></svg><span>Decapado láser · Olivos</span></a>
-    <nav class="main" aria-label="Secciones">
-      <a href="#galeria">Qué restauramos</a>
-      <a href="#metodo">Por qué láser</a>
-      <a href="#como">Cómo trabajamos</a>
-      <a href="#taller">Taller</a>
-    </nav>
-    <a class="btn beam" href="#cotizar">Cotizar</a>
+    <a class="logo" href="#inicio" aria-label="Veta, inicio"><svg viewBox="-26 -8 352 116" aria-hidden="true"><defs><clipPath id="lg-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="lg-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="3.4"/></pattern></defs><g clip-path="url(#lg-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#lg-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#E0301E"/></svg></a>
+    <nav aria-label="Secciones"><a href="#piezas">Qué restauramos</a><a href="#por-que">Por qué láser</a><a href="#contacto">Contacto</a></nav>
+    <a class="btn" href="#cotizar">Cotizar</a>
   </div>
 </header>
 
 <main id="inicio">
-  <!-- 1 · Portada -->
-  <section id="story" aria-label="Portada: la puerta se decapa al hacer scroll">
-    <div class="stick" id="stick">
-      <div class="s-left" id="sLeft">
-        <h1 class="sten">Sacamos<br>la pintura.</h1>
-        <p>Decapado láser de madera en Olivos. Sin lija, sin removedor y sin perder un milímetro de la pieza.</p>
-      </div>
-      <div class="doorbox" id="doorbox">
-        <img class="rest" src="img/puerta-restaurada.webp" alt="Puerta antigua de roble restaurada">
-        <img class="paint" src="img/puerta-pintada.webp" alt="La misma puerta con pintura verde descascarada">
-        <div class="laser" id="laser"></div>
-        <div class="shade"></div>
-      </div>
-      <div class="s-right" id="sRight">
-        <h2 class="big">La madera<br>queda.</h2>
-        <div class="cta"><a class="btn beam" href="#cotizar">Cotizar mi pieza</a></div>
-      </div>
-      <canvas class="sparks" id="sparks"></canvas>
-      <div class="hint" id="hint"><span></span>Scrolleá para decapar</div>
-      <div class="hud" aria-live="off">
-        <span>Capas removidas <b id="hCap">0 / 4</b></span>
-        <span>Madera perdida <b>0,00 mm</b></span>
-        <span class="hz">Haz <b>1064 nm · 5 mJ</b></span>
-        <div class="bar" id="hBar"><i></i></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2 · Franja -->
-  <div class="marquee" aria-hidden="true">
-    <div class="mq-row" id="mq1"><span>Sin lija</span><span>Sin químicos</span><span>Sin polvo</span><span>Sin perder madera</span><span>Sin lija</span><span>Sin químicos</span><span>Sin polvo</span><span>Sin perder madera</span></div>
-    <div class="mq-row out" id="mq2"><span>Puertas</span><span>Persianas</span><span>Escaleras</span><span>Muebles</span><span>Pisos</span><span>Vigas</span><span>Puertas</span><span>Persianas</span><span>Escaleras</span><span>Muebles</span><span>Pisos</span><span>Vigas</span></div>
-  </div>
-
-  <!-- 3 · Manifiesto -->
-  <section class="manif" id="manif">
-    <div class="wrap">
-      <span class="eyebrow">Por qué existe Veta</span>
-      <p class="words" id="words" style="margin-top:28px">Una puerta de cien años tiene cuatro, cinco, seis manos de pintura. Debajo está la madera que eligió el carpintero. El láser la devuelve tal cual: sin lijarla, sin mojarla, sin perder un milímetro.</p>
-      <div class="sign"><a class="btn ghost" href="#metodo">Ver la diferencia</a><span class="eyebrow">Láser pulsado de 300 W · taller en Olivos</span></div>
-    </div>
-  </section>
-
-  <!-- 4 · Galería horizontal -->
-  <section id="galeria" aria-label="Qué restauramos">
-    <div class="g-stick" id="gStick">
-      <div class="g-head"><div class="wrap"><h2 class="big">Qué restauramos</h2><span class="g-count"><b id="gNow">01</b> / 07</span></div></div>
-      <div class="g-track" id="gTrack">
-        <article class="panel"><div class="ph"><img src="img/02-puerta-antes-despues.webp" alt="Puerta antigua mitad pintada y mitad restaurada" loading="lazy"></div><h3 class="sten">Puertas</h3><div class="meta"><p>Puertas de casa chorizo, portones y puertas de entrada con tallas. Se trabajan en el taller o en el lugar, sin desmontar.</p><span>≈ 1,6 m² por cara</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/07-persianas.webp" alt="Persianas de madera, una pintada y otra restaurada" loading="lazy"></div><h3 class="sten">Persianas</h3><div class="meta"><p>Postigos, celosías y persianas de madera. La máquina va con ruedas y anda con 220 V: vamos a tu casa.</p><span>Sin desmontar</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/09-escalera.webp" alt="Escalera con balaustres torneados mitad pintados" loading="lazy"></div><h3 class="sten">Escaleras</h3><div class="meta"><p>Balaustres torneados, pasamanos y escalones. El haz entra en cada curva sin llenar la casa de polvo.</p><span>Torneados incluidos</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/04-roseta-tallada.webp" alt="Roseta tallada a medio decapar" loading="lazy"></div><h3 class="sten">Tallas</h3><div class="meta"><p>Rosetas, cornisas y ornamentos con décadas de pintura en los relieves. Lo que la lija borra, el láser lo rescata.</p><span>Capa por capa</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/06-silla.webp" alt="Silla antigua mitad pintada y mitad en madera" loading="lazy"></div><h3 class="sten">Muebles</h3><div class="meta"><p>Sillas, aparadores, cómodas. Piezas de familia que vuelven a mostrar la madera original.</p><span>Pieza por pieza</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/08-parquet.webp" alt="Parquet con una franja decapada" loading="lazy"></div><h3 class="sten">Pisos</h3><div class="meta"><p>Parquet y entablonados pintados o con barniz viejo. Los plastificados de poliuretano llevan una prueba antes.</p><span>Por m²</span></div></article>
-        <article class="panel"><div class="ph"><img src="img/10-vigas.webp" alt="Techo de vigas mitad con hollín y mitad restauradas" loading="lazy"></div><h3 class="sten">Vigas</h3><div class="meta"><p>Tirantes y entablonados con hollín, humo o pintura. Ideal después de un incendio o en reciclajes.</p><span>Hollín y humo</span></div></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5 · Probalo vos -->
-  <section class="try" id="probalo">
-    <div class="wrap">
-      <div class="try-head reveal"><h2 class="sten">Probalo vos</h2><p>Pasá el cursor por el portón: el láser sos vos. Cada pasada saca una capa, como en el taller.</p></div>
-      <div class="door" id="door" aria-label="Demostración interactiva: un portón pintado de verde que se decapa al pasar el cursor">
-        <canvas id="c-wood"></canvas><canvas id="c-paint"></canvas><canvas id="c-fx"></canvas>
-        <div class="d-hint" id="dhint"><i></i><span id="dhint-txt">Pasá el cursor por la puerta</span></div>
-      </div>
-      <div class="readout">
-        <span>DECAPADO <b id="ro-area">0,00</b> de <b>1,80 m²</b></span>
-        <span>A MANO SERÍAN <b id="ro-time">0 min</b> de lija</span>
-        <button type="button" id="repaint">Volver a pintar</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6 · Método -->
-  <section class="light metodo" id="metodo">
-    <div class="wrap">
-      <div class="m-head reveal"><h2 class="big">Tres formas de sacar pintura</h2><p>Corte de una tabla con tres manos de pintura. Elegí un método y mirá qué le pasa a la madera.</p></div>
-      <div class="cmp">
-        <div>
-          <div class="tabs" role="group" aria-label="Método">
-            <button type="button" data-m="lija" aria-pressed="false">Lija</button>
-            <button type="button" data-m="quim" aria-pressed="false">Removedor</button>
-            <button type="button" data-m="laser" aria-pressed="true">Láser</button>
-          </div>
-          <svg class="xsec m-laser" id="xsec" viewBox="0 0 600 270" role="img" aria-label="Corte de una tabla con capas de pintura">
-            <defs><clipPath id="woodclip"><rect x="40" y="110" width="520" height="130"/></clipPath></defs>
-            <rect x="40" y="122" width="520" height="118" fill="#B5793F"/>
-            <rect class="lost" x="40" y="110" width="520" height="12"/>
-            <g clip-path="url(#woodclip)" stroke="#6A4020" stroke-opacity=".55" fill="none" stroke-width="1.4">
-              <path d="M40 140 C160 132 260 150 380 138 S520 146 560 140"/><path d="M40 160 C140 168 240 152 360 162 S500 156 560 164"/><path d="M40 184 C170 176 280 194 400 182 S520 190 560 186"/><path d="M40 206 C150 214 270 198 380 210 S510 202 560 208"/><path d="M40 228 C160 222 280 234 400 226 S520 232 560 228"/><ellipse cx="420" cy="172" rx="26" ry="9"/><ellipse cx="420" cy="172" rx="14" ry="4.5"/>
-            </g>
-            <rect class="soak fade" x="40" y="110" width="520" height="16" fill="#3A2412"/>
-            <g class="layer"><rect x="40" y="100" width="520" height="10" fill="#8C3B2A"/></g>
-            <g class="layer"><rect x="40" y="90" width="520" height="10" fill="#E3DCC6"/></g>
-            <g class="layer"><rect x="40" y="78" width="520" height="12" fill="#1F5A3E"/></g>
-            <path class="gooblob fade" fill="#7C8B3C" d="M40 110 L40 96 C80 90 110 102 150 94 S230 88 270 98 S350 104 390 92 S480 90 520 100 S560 96 560 98 L560 110 Z" opacity=".85"/>
-            <g class="dust fade" fill="#B5793F"><circle cx="120" cy="96" r="2.5"/><circle cx="160" cy="84" r="2"/><circle cx="210" cy="92" r="3"/><circle cx="300" cy="78" r="2"/><circle cx="350" cy="94" r="2.5"/><circle cx="420" cy="86" r="2"/><circle cx="480" cy="98" r="3"/><circle cx="250" cy="60" r="1.6"/><circle cx="390" cy="66" r="1.6"/></g>
-            <g class="bracket fade"><line x1="570" y1="110" x2="570" y2="122" stroke="#FF3B24" stroke-width="2"/><line x1="564" y1="110" x2="576" y2="110" stroke="#FF3B24" stroke-width="2"/><line x1="564" y1="122" x2="576" y2="122" stroke="#FF3B24" stroke-width="2"/></g>
-            <g class="beamline fade"><line x1="300" y1="20" x2="300" y2="110" stroke="#FF3B24" stroke-width="2"/><circle cx="300" cy="110" r="5" fill="#FF3B24"/><circle cx="300" cy="110" r="12" fill="#FF3B24" opacity=".2"/></g>
-            <line x1="20" y1="110" x2="580" y2="110" stroke="#0F1712" stroke-dasharray="4 4" stroke-width="1"/>
-            <text x="40" y="258">Madera</text>
-            <text x="40" y="40" class="lbl-strong" id="xs-label">Superficie original: intacta</text>
-            <text x="40" y="58" id="xs-sub">El láser se detiene donde termina la pintura</text>
-          </svg>
-          <p class="xcap" id="xcap"></p>
-        </div>
-        <div class="tbl">
-          <table class="facts" id="facts">
-            <thead><tr><th scope="col"></th><th scope="col" data-c="lija">Lija</th><th scope="col" data-c="quim">Removedor</th><th scope="col" data-c="laser">Láser</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Madera que se pierde</th><td data-c="lija">Se come la superficie y redondea aristas</td><td data-c="quim">Poca, pero levanta la fibra</td><td data-c="laser">Ninguna: solo saca la pintura</td></tr>
-              <tr><th scope="row">Tallados y molduras</th><td data-c="lija">Difícil, a mano y lento</td><td data-c="quim">Queda pintura en los rincones</td><td data-c="laser">El haz entra en cada rincón</td></tr>
-              <tr><th scope="row">Residuos</th><td data-c="lija">Polvo fino de pintura vieja</td><td data-c="quim">Barro químico para descartar</td><td data-c="laser">Vapor que se aspira</td></tr>
-              <tr><th scope="row">Agua y químicos</th><td data-c="lija">No</td><td data-c="quim">Sí, y hay que neutralizar</td><td data-c="laser">No</td></tr>
-              <tr><th scope="row">Lista para terminar</th><td data-c="lija">Al terminar de lijar</td><td data-c="quim">Después de lavar y secar</td><td data-c="laser">El mismo día</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 · Cómo trabajamos -->
-  <section class="como" id="como">
-    <div class="wrap como-grid">
-      <div class="scope-wrap">
-        <h2 class="big">Cómo trabajamos</h2>
-        <div class="scope" aria-label="Simulación de patrones de barrido">
-          <div class="scope-top"><span>Patrón de barrido</span><span id="sc-name">Línea</span></div>
-          <canvas id="scope"></canvas>
-          <div class="modes" role="group" aria-label="Elegí un patrón">
-            <button type="button" data-p="linea" aria-pressed="true">Línea</button>
-            <button type="button" data-p="rect" aria-pressed="false">Rectángulo</button>
-            <button type="button" data-p="circ" aria-pressed="false">Círculo</button>
-            <button type="button" data-p="seno" aria-pressed="false">Senoidal</button>
-            <button type="button" data-p="espiral" aria-pressed="false">Espiral</button>
-          </div>
-          <p id="sc-txt"></p>
-        </div>
-      </div>
-      <ol class="steps" id="steps">
-        <li data-p="linea" class="on"><h3>Nos mandás fotos y medidas</h3><p>Con el cotizador tenés un precio orientativo en un minuto. Eduardo lo confirma con las fotos por WhatsApp.</p></li>
-        <li data-p="circ"><h3>Prueba en una zona que no se ve</h3><p>Cada madera y cada pintura reaccionan distinto. Ajustamos potencia, frecuencia y patrón antes de tocar el resto.</p></li>
-        <li data-p="rect"><h3>Decapado</h3><p>Pulsos de nanosegundos vaporizan la pintura capa por capa. En el taller de Olivos o en tu casa, sin desarmar la abertura.</p></li>
-        <li data-p="espiral"><h3>Lista para terminar</h3><p>Te entregamos la madera limpia, lista para aceitar, lustrar o barnizar. Si querés, te recomendamos quién lo haga.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- 8 · La máquina -->
-  <section class="maq" id="maquina">
-    <div class="wrap maq-grid">
-      <div class="vid reveal">
-        <video autoplay muted loop playsinline poster="img/02-puerta-antes-despues.webp" aria-label="Video ilustrativo: el láser saca la pintura verde de una puerta">
-          <source src="img/decapado.mp4" type="video/mp4">
-        </video>
-        <span class="tag">Video ilustrativo</span>
-      </div>
+  <section class="hero">
+    <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow">La máquina</span>
-        <h2 class="big" style="margin-top:16px">Láser pulsado, no fuego</h2>
-        <div class="specs">
-          <div><b data-count="300">300</b><span>Watts de láser de fibra</span></div>
-          <div><b data-count="1064">1064</b><span>nm de longitud de onda</span></div>
-          <div><b data-count="5">5</b><span>mJ de energía por pulso</span></div>
-          <div><b data-count="12">12</b><span>Patrones de barrido</span></div>
-          <div><b>13–500</b><span>ns de ancho de pulso</span></div>
-          <div><b data-count="220">220</b><span>V, con ruedas: va a tu casa</span></div>
+        <h1 class="disp">Sacamos la pintura. <span>La madera queda.</span></h1>
+        <p class="lead">Decapado láser de puertas, aberturas, muebles y pisos en Olivos. Sin lija, sin químicos y sin perder madera.</p>
+        <div class="cta"><a class="btn" href="#cotizar">Cotizar mi pieza</a><a class="btn line" href="#contacto">Escribinos</a></div>
+        <div class="pills"><span>Sin lija</span><span>Sin químicos</span><span>Sin polvo</span><span>Vamos a domicilio</span></div>
+      </div>
+      <div class="stage">
+        <div class="door" id="door" aria-label="Puerta pintada de verde. Pasá el cursor o el dedo para sacar la pintura y ver la madera restaurada.">
+          <img src="img/puerta-restaurada.webp" alt="Puerta antigua de roble restaurada">
+          <canvas id="cPaint"></canvas>
+          <canvas id="cFx"></canvas>
+          <div class="d-hint" id="hint"><i></i><span id="hintTxt">Pasá el cursor: sacá la pintura</span></div>
         </div>
-        <p class="note">Cada pulso dura nanosegundos: vaporiza la pintura antes de que la madera llegue a calentarse.</p>
+        <div class="d-bar"><span id="pct">0% decapado</span><div class="meter"><i id="meter"></i></div><button type="button" id="repaint">Volver a pintar</button></div>
+        <div class="done" id="done"><span>Así queda tu puerta.</span><a class="btn" href="#cotizar">Cotizar</a></div>
       </div>
     </div>
   </section>
 
-  <!-- 9 · Cotizador -->
-  <section class="cot" id="cotizar">
+  <section id="piezas">
     <div class="wrap">
-      <div class="cot-head reveal"><span class="eyebrow">Cotizador</span><h2 class="sten">¿Cuánto sale tu pieza?</h2><p>Completá lo que sepas. El precio es orientativo: Eduardo lo confirma con fotos por WhatsApp.</p></div>
+      <div class="head"><h2 class="disp">Qué restauramos</h2><p>Si es madera y tiene pintura o barniz viejo, la sacamos.</p></div>
+      <div class="grid3">
+        <article class="piece"><div class="ph"><img src="img/02-puerta-antes-despues.webp" alt="Puerta mitad pintada y mitad restaurada" loading="lazy"></div><div class="t"><h3>Puertas</h3><p>De entrada, interiores y portones.</p></div></article>
+        <article class="piece"><div class="ph"><img src="img/07-persianas.webp" alt="Persianas de madera" loading="lazy"></div><div class="t"><h3>Persianas</h3><p>Postigos y celosías, sin desmontar.</p></div></article>
+        <article class="piece"><div class="ph"><img src="img/09-escalera.webp" alt="Escalera con balaustres torneados" loading="lazy"></div><div class="t"><h3>Escaleras</h3><p>Balaustres, pasamanos y escalones.</p></div></article>
+        <article class="piece"><div class="ph"><img src="img/06-silla.webp" alt="Silla antigua mitad restaurada" loading="lazy"></div><div class="t"><h3>Muebles</h3><p>Sillas, aparadores, piezas con tallas.</p></div></article>
+        <article class="piece"><div class="ph"><img src="img/08-parquet.webp" alt="Parquet con una franja decapada" loading="lazy"></div><div class="t"><h3>Pisos</h3><p>Parquet y entablonados pintados.</p></div></article>
+        <article class="piece"><div class="ph"><img src="img/10-vigas.webp" alt="Vigas de techo mitad restauradas" loading="lazy"></div><div class="t"><h3>Vigas</h3><p>Tirantes con hollín o pintura.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="green" id="por-que">
+    <div class="wrap why">
+      <div>
+        <div class="head"><h2 class="disp">Por qué láser</h2><p>Pulsos de luz de nanosegundos vaporizan la pintura. La madera de abajo queda como estaba.</p></div>
+        <div class="points">
+          <div><b>Sin lija</b><h3>No se pierde madera</h3><p>La lija se come la superficie y borra las tallas. El láser solo saca la pintura.</p></div>
+          <div><b>Sin químicos</b><h3>Ni removedor ni agua</h3><p>No queda barro químico ni madera embebida. Se puede terminar el mismo día.</p></div>
+          <div><b>A domicilio</b><h3>Vamos con la máquina</h3><p>Tiene ruedas y anda con 220 V. Trabajamos puertas y persianas sin desmontarlas.</p></div>
+        </div>
+      </div>
+      <div class="vid"><video autoplay muted loop playsinline poster="img/02-puerta-antes-despues.webp" aria-label="Video ilustrativo del decapado de una puerta"><source src="img/decapado.mp4" type="video/mp4"></video><span>Video ilustrativo</span></div>
+    </div>
+  </section>
+
+  <section id="cotizar">
+    <div class="wrap">
+      <div class="head"><h2 class="disp">¿Cuánto sale?</h2><p>Completá lo que sepas y mandalo por WhatsApp. Eduardo confirma el precio con fotos.</p></div>
       <div class="quote">
         <form class="q-form" id="qform" novalidate>
           <fieldset><legend>Qué pieza es</legend><div class="chips" id="q-tipo"></div><p class="help" id="q-tipo-help"></p></fieldset>
-          <fieldset id="fs-medidas"><legend>Medidas <span class="eyebrow">en centímetros</span></legend>
+          <fieldset id="fs-medidas"><legend>Medidas en centímetros</legend>
             <div class="dims">
-              <div class="field"><label for="q-ancho">Ancho</label><input id="q-ancho" type="number" inputmode="numeric" min="1" step="1"></div>
-              <div class="field"><label for="q-alto">Alto o largo</label><input id="q-alto" type="number" inputmode="numeric" min="1" step="1"></div>
+              <div class="field"><label for="q-ancho">Ancho</label><input id="q-ancho" type="number" inputmode="numeric" min="1"></div>
+              <div class="field"><label for="q-alto">Alto o largo</label><input id="q-alto" type="number" inputmode="numeric" min="1"></div>
               <div class="field"><label for="q-caras">Caras</label><select id="q-caras"><option value="1">1 cara</option><option value="2">2 caras</option></select></div>
-              <div class="field"><label for="q-cant">Cantidad</label><input id="q-cant" type="number" inputmode="numeric" min="1" step="1" value="1"></div>
+              <div class="field"><label for="q-cant">Cantidad</label><input id="q-cant" type="number" inputmode="numeric" min="1" value="1"></div>
             </div>
           </fieldset>
-          <fieldset id="fs-m2" hidden><legend>Superficie <span class="eyebrow">en m²</span></legend><div class="dims"><div class="field"><label for="q-m2">Metros cuadrados</label><input id="q-m2" type="number" inputmode="decimal" min="0.1" step="0.5"></div></div></fieldset>
+          <fieldset id="fs-m2" hidden><legend>Superficie en m²</legend><div class="dims"><div class="field"><label for="q-m2">Metros cuadrados</label><input id="q-m2" type="number" inputmode="decimal" min="0.1" step="0.5"></div></div></fieldset>
           <fieldset><legend>Qué tiene encima</legend><div class="chips" id="q-rec"></div></fieldset>
-          <fieldset><legend>Cuántas manos de pintura</legend>
-            <div class="range-row"><input id="q-capas" type="range" min="1" max="6" step="1" value="3" aria-describedby="q-capas-help"><span class="range-val" id="q-capas-val">3</span></div>
-            <p class="help" id="q-capas-help">Truco: raspá un borde con una moneda y contá los colores que aparecen.</p>
-          </fieldset>
+          <fieldset><legend>Cuántas manos de pintura</legend><div class="range-row"><input id="q-capas" type="range" min="1" max="6" step="1" value="3"><span class="range-val" id="q-capas-val">3</span></div><p class="help">Raspá un borde con una moneda y contá los colores.</p></fieldset>
           <fieldset><legend>Cómo es la superficie</legend><div class="chips" id="q-det"></div></fieldset>
           <fieldset><legend>Dónde trabajamos</legend><div class="chips" id="q-lugar"></div><div class="field" id="f-zona" hidden><label for="q-zona">Zona</label><select id="q-zona"></select></div></fieldset>
         </form>
         <aside class="ticket" aria-live="polite">
-          <div class="t-head"><span>Estimado web</span><span id="t-date"></span></div>
-          <div class="t-price"><b id="t-range">—</b><span>Precio orientativo, sin IVA</span></div>
-          <div class="t-rows">
-            <div><span>Pieza</span><span id="t-pieza">—</span></div>
-            <div><span>Superficie</span><span id="t-m2">—</span></div>
-            <div><span>Láser estimado</span><span id="t-horas">—</span></div>
-            <div><span>Traslado</span><span id="t-tras">—</span></div>
-          </div>
-          <div class="t-bar"><span class="fine">Tiempo de máquina · cada barra = 15 min</span><div class="cells" id="t-cells"></div></div>
-          <div class="t-flag" id="t-flag"></div>
-          <div class="t-actions">
-            <div class="field"><label for="q-nombre">Tu nombre</label><input id="q-nombre" type="text" autocomplete="given-name" placeholder="Para que Eduardo sepa quién escribe"></div>
-            <div class="row"><a class="btn beam" id="q-wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" id="q-copy">Copiar</button></div>
+          <div class="t-top"><small>Precio estimado, sin IVA</small><b id="t-range">—</b></div>
+          <div class="t-body">
+            <div class="t-rows">
+              <div><span>Pieza</span><span id="t-pieza">—</span></div>
+              <div><span>Superficie</span><span id="t-m2">—</span></div>
+              <div><span>Tiempo de láser</span><span id="t-horas">—</span></div>
+              <div><span>Traslado</span><span id="t-tras">—</span></div>
+            </div>
+            <div class="t-flag" id="t-flag"></div>
+            <div class="field"><label for="q-nombre">Tu nombre</label><input id="q-nombre" type="text" autocomplete="given-name" placeholder="Ana"></div>
+            <div class="row"><a class="btn" id="q-wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn line" type="button" id="q-copy">Copiar</button></div>
             <p class="copied" id="q-copied"></p>
-            <p class="fine">Mandá también 2 o 3 fotos de la pieza. Con eso confirmamos el precio y el turno.</p>
+            <p class="fine">Sumá 2 o 3 fotos de la pieza en el chat.</p>
           </div>
         </aside>
       </div>
     </div>
   </section>
 
-  <!-- 10 · Taller -->
-  <section class="taller" id="taller">
-    <div class="bg" id="tallerBg"></div>
-    <div class="wrap">
-      <span class="eyebrow" style="color:#C7D2CA">Taller · Vicente López</span>
-      <h2 class="sten">Olivos</h2>
-      <div class="t-grid">
-        <div style="display:grid;gap:22px;justify-items:start">
-          <p>Traé la pieza al taller o vamos nosotros: la máquina tiene ruedas, se enfría por aire y funciona con un enchufe común de 220 V.</p>
-          <dl class="contact">
-            <div><dt>Dirección</dt><dd id="c-dir"></dd></div>
-            <div><dt>Horario</dt><dd id="c-hor"></dd></div>
-            <div><dt>WhatsApp</dt><dd><a id="c-wa" target="_blank" rel="noopener"></a></dd></div>
-            <div><dt>Instagram</dt><dd><a id="c-ig" target="_blank" rel="noopener"></a></dd></div>
-            <div><dt>Mail</dt><dd id="c-mail"></dd></div>
-          </dl>
-          <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn beam" id="c-wa-btn" target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="btn" id="c-map" target="_blank" rel="noopener">Ver en el mapa</a></div>
-        </div>
-        <div class="zones" id="zones"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11 · FAQ -->
-  <section class="faq">
-    <div class="wrap faq-grid">
-      <h2 class="big">Lo que más nos preguntan</h2>
+  <section class="green" id="contacto">
+    <div class="wrap contact-grid">
       <div>
-        <details><summary>¿El láser quema la madera?</summary><p>No, si está bien regulado. Es un láser pulsado: dispara pulsos de nanosegundos que vaporizan la pintura sin darle tiempo a la madera de calentarse. Por eso siempre empezamos con una prueba en una zona oculta.</p></details>
-        <details><summary>¿Hay que lijar después?</summary><p>No hace falta desbastar. Para un barniz o lustre fino, alcanza con un repaso suave de lija fina antes de aplicar la terminación.</p></details>
-        <details><summary>¿Hace humo u olor?</summary><p>La pintura se vaporiza y genera humo. Trabajamos con aspiración y ventilación, y en domicilio aislamos la zona de trabajo.</p></details>
-        <details><summary>¿Hay un trabajo mínimo?</summary><p>Sí, el mínimo es de 4 horas de láser. Si tenés varias piezas chicas, las juntamos en la misma visita y entran en ese mínimo.</p></details>
-        <details><summary>¿Cuánto tarda?</summary><p>Depende de la cantidad de manos y del detalle. Una superficie lisa con pocas capas avanza rápido; tallados y pinturas gruesas llevan más tiempo. El cotizador te da una estimación en horas.</p></details>
-        <details><summary>¿Sirve para pisos de parquet?</summary><p>Sí, sobre todo con pintura o barniz viejo. Los plastificados de poliuretano cuestan más y conviene una prueba antes.</p></details>
+        <h2 class="disp">Taller en Olivos</h2>
+        <p class="lead">Traé la pieza o vamos nosotros. Escribinos y coordinamos.</p>
+        <div class="btns"><a class="btn" id="c-wa-btn" target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="btn line" id="c-map" target="_blank" rel="noopener">Ver en el mapa</a></div>
       </div>
+      <dl>
+        <div><dt>WhatsApp</dt><dd><a id="c-wa" target="_blank" rel="noopener"></a></dd></div>
+        <div><dt>Dirección</dt><dd id="c-dir"></dd></div>
+        <div><dt>Horario</dt><dd id="c-hor"></dd></div>
+        <div><dt>Instagram</dt><dd><a id="c-ig" target="_blank" rel="noopener"></a></dd></div>
+        <div><dt>Mail</dt><dd id="c-mail"></dd></div>
+      </dl>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <svg class="giant" viewBox="-26 -8 352 116" aria-label="Veta"><defs><clipPath id="ft-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="ft-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#2B7A54" stroke-width="1.9"/></pattern></defs><g clip-path="url(#ft-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#ft-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#FF3B24" stroke-width="1"/><circle cx="320" cy="54" r="3" fill="#FF3B24"/></svg>
-    <div class="row"><span>Veta · Decapado láser de madera · <span id="f-dir"></span></span><span id="f-contact"></span><span>Precios orientativos · Imágenes ilustrativas del proceso</span></div>
+    <svg viewBox="-26 -8 352 116" aria-label="Veta"><defs><clipPath id="ft-k"><path clip-rule="evenodd" d="M0 0H22L38 70L54 0H76L50 100H26Z M84 0H142V20H106V40H134V60H106V80H142V100H84Z M150 0H214V20H193V100H171V20H150Z M246 0H276L300 100H278L273 80H249L244 100H222Z M253 62H269L261 28Z"/></clipPath><pattern id="ft-g" width="5.6" height="44" patternUnits="userSpaceOnUse" y="57"><path d="M2.8 0q2.6 11 0 22t0 22" fill="none" stroke="#1F5A3E" stroke-width="3.4"/></pattern></defs><g clip-path="url(#ft-k)"><rect width="300" height="51" fill="#1F5A3E"/><rect y="57" width="300" height="43" fill="url(#ft-g)"/></g><line x1="-26" y1="54" x2="318" y2="54" stroke="#E0301E" stroke-width="2.6"/><circle cx="320" cy="54" r="5" fill="#E0301E"/></svg>
+    <span>Decapado láser de madera · Olivos, Vicente López</span>
+    <span>Precios orientativos · Imágenes ilustrativas</span>
   </div>
 </footer>
-<a class="wa-float off" id="waFloat" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><i></i>WhatsApp</a>
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 const CONFIG={whatsapp:'5491130961102',whatsappTexto:'11 3096-1102',tarifaHora:55000,minimoHoras:4,preparacion:0.5,margenBajo:0.15,margenAlto:0.2,
   direccion:'Ugarte 1500, Olivos',horario:'Lunes a viernes de 9 a 18 h',instagram:'veta.laser',mail:'hola@vetalaser.com.ar'};
 const ZONAS=[{id:'vl',label:'Vicente López',costo:25000},{id:'si',label:'San Isidro y San Fernando',costo:35000},{id:'caba',label:'CABA',costo:40000},{id:'otra',label:'Otra zona',costo:null}];
-const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-setTimeout(()=>document.querySelector('.loader')?.remove(), document.hidden ? 0 : 2300);
-const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
-const fmtNum=(n,d=2)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 const $=id=>document.getElementById(id);
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmtNum=(n,d=1)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d});
 
-/* ===== Datos de contacto ===== */
+/* Contacto */
 (()=>{ const wa=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Hola Eduardo, vi la web de Veta y quiero hacer una consulta.')}`;
-  const map=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.direccion+', Vicente López, Buenos Aires')}`;
+  $('c-wa').textContent=CONFIG.whatsappTexto; $('c-wa').href=wa; $('c-wa-btn').href=wa;
+  $('c-map').href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.direccion+', Vicente López, Buenos Aires')}`;
   $('c-dir').textContent=CONFIG.direccion; $('c-hor').textContent=CONFIG.horario;
-  $('c-wa').textContent=CONFIG.whatsappTexto; $('c-wa').href=wa; $('c-wa-btn').href=wa; $('waFloat').href=wa; $('c-map').href=map;
-  $('c-ig').textContent='@'+CONFIG.instagram; $('c-ig').href=`https://www.instagram.com/${CONFIG.instagram}/`;
-  $('c-mail').textContent=CONFIG.mail; $('f-dir').textContent=CONFIG.direccion; $('f-contact').textContent=`WhatsApp ${CONFIG.whatsappTexto} · @${CONFIG.instagram} · ${CONFIG.mail}`;
-})();
+  $('c-ig').textContent='@'+CONFIG.instagram; $('c-ig').href=`https://www.instagram.com/${CONFIG.instagram}/`; $('c-mail').textContent=CONFIG.mail; })();
 
-/* ===== Scroll suave ===== */
-let lenis=null;
-if(!reduceMotion && window.Lenis){ try{ lenis=new Lenis({lerp:.11, smoothWheel:true}); }catch(_){ lenis=null; } }
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-  const t=document.querySelector(a.getAttribute('href')); if(!t) return;
-  e.preventDefault(); if(lenis) lenis.scrollTo(t,{offset:-10}); else t.scrollIntoView({behavior:reduceMotion?'auto':'smooth'});
-}));
-
-/* ===== Cursor mira ===== */
-(()=>{ if(!fine) return; const c=$('cursor'); document.body.classList.add('has-cursor');
-  let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
-  addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;c.classList.add('on'); const over=e.target.closest('#door'); c.style.opacity=over?0:''; c.classList.toggle('hov',!!e.target.closest('a,button,label,summary,input,select'));});
-  document.addEventListener('pointerleave',()=>c.classList.remove('on'));
-  (function loop(){cx+=(x-cx)*.22;cy+=(y-cy)*.22;c.style.transform=`translate3d(${cx}px,${cy}px,0)`;requestAnimationFrame(loop);})();
-})();
-
-/* ===== Motor de scroll ===== */
-const story=$('story'), stick=$('stick'), doorbox=$('doorbox'), laser=$('laser'), sLeft=$('sLeft'), sRight=$('sRight'), hint=$('hint'), hCap=$('hCap'), hBar=$('hBar');
-const gal=$('galeria'), gTrack=$('gTrack'), gNow=$('gNow'), panels=[...document.querySelectorAll('.panel')];
-const waFloat=$('waFloat');
-const header=$('top'), mq1=$('mq1'), mq2=$('mq2'), tallerBg=$('tallerBg');
-const words=$('words'); words.innerHTML=words.textContent.split(' ').map(w=>`<span class="w${/madera|láser|milímetro/i.test(w)?' hot':''}">${w}</span>`).join(' ');
-const wEls=[...words.querySelectorAll('.w')];
-const prog=el=>{const r=el.getBoundingClientRect(); return clamp(-r.top/(r.height-innerHeight));};
-let lastP=0, lastY=scrollY, vel=0, mqX1=0, mqX2=0;
-const sp=$('sparks'), sx=sp.getContext('2d'); let parts=[], spW=0, spH=0;
-function sizeSparks(){const d=Math.min(2,devicePixelRatio||1); spW=stick.clientWidth; spH=stick.clientHeight; sp.width=spW*d; sp.height=spH*d; sx.setTransform(d,0,0,d,0,0);
-  // la puerta ocupa el alto disponible sin desbordar
-  const mobile=innerWidth<=860, cs=getComputedStyle(stick);
-  const padV=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom);
-  let h=spH-padV-(mobile? sLeft.offsetHeight+16 : 20); h=Math.max(150,h);
-  let w=h*880/1168; const maxW=mobile? innerWidth-40 : innerWidth*.34; if(w>maxW){w=maxW;h=w*1168/880;}
-  doorbox.style.height=h+'px'; doorbox.style.width=w+'px';}
-sizeSparks(); addEventListener('resize',sizeSparks);
-
-function frame(t){
-  const y=scrollY; vel+=((y-lastY)-vel)*.2; lastY=y;
-  header.classList.toggle('solid', y>innerHeight*2.6);
-  const cotR=$('cotizar').getBoundingClientRect(); waFloat.classList.toggle('off', y<innerHeight*2.6 || (cotR.top<innerHeight && cotR.bottom>0));
-
-  // Portada: el haz baja por la puerta
-  const raw=prog(story), p=clamp(raw/0.86);
-  const cut=(p*100).toFixed(2)+'%';
-  doorbox.style.setProperty('--cut',cut);
-  laser.style.setProperty('--lz', p>0.002 && p<0.998 ? 1 : 0);
-  if(innerWidth>860){
-    sLeft.style.transform=`translate3d(${-p*120}px,0,0)`; sLeft.style.opacity=clamp(1-p*1.6);
-    sRight.style.transform=`translate3d(${(1-clamp((p-.5)*2))*120}px,0,0)`; sRight.style.opacity=clamp((p-.5)*2.2);
-  } else {
-    sLeft.style.opacity=clamp(1-p*2.2); sRight.style.opacity=clamp((p-.55)*2.4); sRight.style.transform='none'; sLeft.style.transform='none';
-  }
-  sRight.style.pointerEvents = p>.6 ? 'auto':'none';
-  hint.style.opacity=clamp(1-raw*12);
-  hCap.textContent=`${Math.min(4,Math.floor(p*4.0001))} / 4`;
-  hBar.style.setProperty('--pct',(p*100).toFixed(1)+'%');
-  // chispas en el punto caliente del haz
-  const dp=Math.abs(p-lastP); lastP=p;
-  if(!reduceMotion && p>0.002 && p<0.998){
-    const br=doorbox.getBoundingClientRect(), sr=stick.getBoundingClientRect();
-    const ly=br.top-sr.top+br.height*p, hx=br.left-sr.left+br.width*(.5+.5*Math.sin(t/90));
-    const n=Math.min(18, Math.floor(dp*2400)) + (dp>0? 1:0);
-    for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*2.4, v=2+Math.random()*6; parts.push({x:hx+(Math.random()-.5)*40,y:ly,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.025+Math.random()*.04,s:1});}
-    if(dp>0 && Math.random()<.5) parts.push({x:hx,y:ly,vx:(Math.random()-.5)*.6,vy:-.8-Math.random(),l:1,d:.012,s:0,r:8+Math.random()*10});
-  }
-  sx.clearRect(0,0,spW,spH);
-  sx.globalCompositeOperation='lighter';
-  for(const q of parts){ q.x+=q.vx; q.y+=q.vy; q.l-=q.d; if(q.s){ q.vy+=.2; sx.strokeStyle=`rgba(255,${140+(Math.random()*100|0)},60,${q.l})`; sx.lineWidth=1.6; sx.beginPath(); sx.moveTo(q.x,q.y); sx.lineTo(q.x-q.vx*2,q.y-q.vy*2); sx.stroke(); } }
-  sx.globalCompositeOperation='source-over';
-  for(const q of parts){ if(!q.s){ q.r+=.5; sx.fillStyle=`rgba(210,215,210,${q.l*.08})`; sx.beginPath(); sx.arc(q.x,q.y,q.r,0,6.29); sx.fill(); } }
-  parts=parts.filter(q=>q.l>0); if(parts.length>500) parts.splice(0,parts.length-500);
-
-  // Franja: velocidad base + velocidad de scroll
-  if(!reduceMotion){
-    const sp1=.6+Math.abs(vel)*.25; mqX1-=sp1; mqX2+=sp1;
-    const w1=mq1.scrollWidth/2, w2=mq2.scrollWidth/2;
-    if(-mqX1>w1) mqX1+=w1; if(mqX2>0) mqX2-=w2;
-    mq1.style.transform=`translate3d(${mqX1}px,0,0)`; mq2.style.transform=`translate3d(${mqX2}px,0,0)`;
-  }
-
-  // Manifiesto palabra por palabra
-  const mr=words.getBoundingClientRect(); const mp=clamp((innerHeight*.85-mr.top)/(mr.height+innerHeight*.35));
-  const lit=Math.round(mp*wEls.length); wEls.forEach((w,i)=>w.classList.toggle('lit',i<lit));
-
-  // Galería horizontal
-  if(innerWidth>760){
-    const gp=prog(gal); const max=gTrack.scrollWidth-innerWidth;
-    gTrack.style.transform=`translate3d(${-gp*max}px,0,0)`;
-    gNow.textContent=String(Math.min(panels.length,1+Math.floor(gp*panels.length*.999))).padStart(2,'0');
-    panels.forEach(pn=>{const r=pn.getBoundingClientRect(); const c=(r.left+r.width/2-innerWidth/2)/innerWidth; pn.querySelector('img').style.transform=`scale(1.12) translate3d(${c*-60}px,0,0)`;});
-  }
-  // Taller parallax
-  const tr=tallerBg.parentElement.getBoundingClientRect(); if(tr.top<innerHeight && tr.bottom>0){ tallerBg.style.transform=`scale(1.1) translate3d(0,${(tr.top/innerHeight)*-60}px,0)`; }
-
-  if(lenis) lenis.raf(t);
-  requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
-
-// Revelados y contadores
-const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-const cio=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting||reduceMotion) return; const el=e.target, to=+el.dataset.count, t0=performance.now();
-  (function step(now){const k=clamp((now-t0)/1400), v=Math.round(to*(1-Math.pow(1-k,3))); el.textContent=v; if(k<1) requestAnimationFrame(step);})(t0); cio.unobserve(el); }),{threshold:.6});
-document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
-
-/* ===== Portón interactivo ===== */
+/* Portada: decapar la foto real */
 (()=>{
-  const door=$('door'), cW=$('c-wood'), cP=$('c-paint'), cF=$('c-fx');
-  const xW=cW.getContext('2d'), xP=cP.getContext('2d'), xF=cF.getContext('2d');
-  const dh=$('dhint'), roArea=$('ro-area'), roTime=$('ro-time');
-  const PANEL_M2=1.8, LIJA_M2H=0.35;
-  let W=0,H=0,R=22,parts=[],laser={x:-99,y:-99,on:false,user:false},last=null,dirty=true,demo=null,seed=7,visible=false;
-  const smp=document.createElement('canvas'); smp.width=96; smp.height=44; const sxm=smp.getContext('2d',{willReadFrequently:true});
-  const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
-  function drawWood(){
-    xW.clearRect(0,0,W,H); const n=Math.max(5,Math.round(W/105)), bw=W/n;
-    for(let i=0;i<n;i++){ const x0=i*bw, h=26+rnd()*8, s=44+rnd()*12, l=40+rnd()*9;
-      const g=xW.createLinearGradient(x0,0,x0+bw,0); g.addColorStop(0,`hsl(${h} ${s}% ${l-4}%)`); g.addColorStop(.5,`hsl(${h} ${s}% ${l+3}%)`); g.addColorStop(1,`hsl(${h} ${s}% ${l-5}%)`);
-      xW.fillStyle=g; xW.fillRect(x0,0,bw+1,H); xW.save(); xW.beginPath(); xW.rect(x0+1,0,bw-2,H); xW.clip();
-      const knots=[]; if(rnd()<.6) knots.push({x:x0+bw*(.25+rnd()*.5),y:H*(.15+rnd()*.7),r:8+rnd()*10});
-      const lines=Math.round(bw/2.6);
-      for(let k=0;k<lines;k++){ const gx=x0+rnd()*bw,a1=2+rnd()*5,f1=.004+rnd()*.008,p1=rnd()*6.28,a2=.6+rnd()*1.5,f2=.03+rnd()*.03; xW.beginPath();
-        for(let y=-10;y<=H+10;y+=5){ let x=gx+Math.sin(y*f1+p1)*a1+Math.sin(y*f2+p1*2)*a2; for(const kn of knots){const d=Math.exp(-((y-kn.y)**2)/(2*(kn.r*2.2)**2))*Math.exp(-((gx-kn.x)**2)/(2*(kn.r*1.6)**2)); x+=(gx<kn.x?-1:1)*kn.r*1.3*d;} y<=-10?xW.moveTo(x,y):xW.lineTo(x,y); }
-        const dark=rnd()<.78; xW.strokeStyle=dark?`rgba(70,34,10,${.08+rnd()*.22})`:`rgba(255,214,160,${.05+rnd()*.08})`; xW.lineWidth=.5+rnd()*1.5; xW.stroke(); }
-      for(const kn of knots){ for(let r=kn.r;r>1;r-=2.2){ xW.beginPath(); xW.ellipse(kn.x,kn.y,r*.75,r*1.25,0,0,6.29); xW.strokeStyle=`rgba(60,28,8,${.25+.35*(1-r/kn.r)})`; xW.lineWidth=1.1; xW.stroke(); } }
-      xW.restore(); xW.fillStyle='rgba(28,14,4,.75)'; xW.fillRect(x0-1,0,2.4,H); xW.fillStyle='rgba(255,220,180,.12)'; xW.fillRect(x0+1.4,0,1,H); }
-    const v=xW.createLinearGradient(0,0,0,H); v.addColorStop(0,'rgba(0,0,0,.18)'); v.addColorStop(.25,'rgba(0,0,0,0)'); v.addColorStop(.8,'rgba(0,0,0,0)'); v.addColorStop(1,'rgba(0,0,0,.22)'); xW.fillStyle=v; xW.fillRect(0,0,W,H);
-  }
-  function drawPaint(){
-    xP.globalCompositeOperation='source-over'; xP.clearRect(0,0,W,H); xP.fillStyle='#21513A'; xP.fillRect(0,0,W,H);
-    for(let i=0;i<W*0.9;i++){ const x=rnd()*W,y=rnd()*H,len=20+rnd()*120; xP.strokeStyle=rnd()<.5?`rgba(255,255,255,${.015+rnd()*.03})`:`rgba(0,0,0,${.03+rnd()*.05})`; xP.lineWidth=.6+rnd()*1.6; xP.beginPath(); xP.moveTo(x,y); xP.lineTo(x+(rnd()-.5)*2,y+len); xP.stroke(); }
-    const n=Math.max(5,Math.round(W/105)), bw=W/n; for(let i=1;i<n;i++){ xP.fillStyle='rgba(8,18,12,.55)'; xP.fillRect(i*bw-1,0,2.4,H); }
-    for(let i=0;i<14;i++){ let x=rnd()*W,y=rnd()*H; xP.beginPath(); xP.moveTo(x,y); for(let k=0;k<6;k++){x+=(rnd()-.5)*10;y+=6+rnd()*14;xP.lineTo(x,y);} xP.strokeStyle='rgba(10,20,14,.45)'; xP.lineWidth=.8; xP.stroke(); }
-    for(let i=0;i<22;i++){ const cx=rnd()*W,cy=rnd()*H,r=3+rnd()*11,toWood=rnd()<.35; xP.beginPath(); for(let a=0;a<6.28;a+=.6){const rr=r*(.55+rnd()*.6); xP.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr*1.4);} xP.closePath();
-      if(toWood){xP.globalCompositeOperation='destination-out'; xP.fillStyle='#000'; xP.fill(); xP.globalCompositeOperation='source-over';} else {xP.fillStyle='#D9D1BA'; xP.fill();} }
-    dirty=true;
-  }
-  function ablate(x,y,s=1){ xP.save(); xP.globalCompositeOperation='destination-out'; xP.translate(x,y); xP.scale(1,.55);
-    const g=xP.createRadialGradient(0,0,0,0,0,R); g.addColorStop(0,`rgba(0,0,0,${.95*s})`); g.addColorStop(.65,`rgba(0,0,0,${.7*s})`); g.addColorStop(1,'rgba(0,0,0,0)'); xP.fillStyle=g; xP.beginPath(); xP.arc(0,0,R,0,6.29); xP.fill(); xP.restore();
-    xP.save(); xP.globalCompositeOperation='destination-out'; xP.fillStyle='rgba(0,0,0,.8)'; for(let i=0;i<4;i++){const a=Math.random()*6.28,d=R*(.6+Math.random()*.5); xP.beginPath(); xP.arc(x+Math.cos(a)*d,y+Math.sin(a)*d*.55,R*(.08+Math.random()*.14),0,6.29); xP.fill();} xP.restore(); dirty=true; }
-  function burst(x,y,n=3){ if(reduceMotion) return; for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*2.6,v=1.5+Math.random()*4.5; parts.push({x:x+(Math.random()-.5)*R*1.6,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,decay:.03+Math.random()*.05});} if(parts.length>300) parts.splice(0,parts.length-300); }
-  function stroke(x,y){ if(last){const dx=x-last.x,dy=y-last.y,d=Math.hypot(dx,dy),steps=Math.max(1,Math.ceil(d/(R*.35))); for(let i=1;i<=steps;i++) ablate(last.x+dx*i/steps,last.y+dy*i/steps,.55); burst(x,y,Math.min(6,1+Math.floor(d/6)));} else {ablate(x,y,.55);burst(x,y,2);} last={x,y}; }
-  function measure(){ if(!dirty) return; dirty=false; sxm.clearRect(0,0,96,44); sxm.drawImage(cP,0,0,96,44); const d=sxm.getImageData(0,0,96,44).data; let c=0; for(let i=3;i<d.length;i+=4) if(d[i]<70) c++;
-    const m2=c/(96*44)*PANEL_M2; roArea.textContent=fmtNum(m2); const min=Math.round(m2/LIJA_M2H*60); roTime.textContent=min<60?`${min} min`:`${Math.floor(min/60)} h ${String(min%60).padStart(2,'0')} min`; }
-  function frameD(){ if(visible){ xF.clearRect(0,0,W,H);
-      if(demo && !laser.user){ const p=demo.path(); if(p){laser.x=p.x;laser.y=p.y;laser.on=true;stroke(p.x,p.y);ablate(p.x,p.y,.7);} else {demo=null;laser.on=false;last=null;} }
-      xF.globalCompositeOperation='lighter'; for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.18;p.life-=p.decay; xF.strokeStyle=`rgba(255,${150+Math.random()*90|0},60,${p.life})`; xF.lineWidth=1.4; xF.beginPath(); xF.moveTo(p.x,p.y); xF.lineTo(p.x-p.vx*1.8,p.y-p.vy*1.8); xF.stroke();} xF.globalCompositeOperation='source-over'; parts=parts.filter(p=>p.life>0);
-      if(laser.x>-50){ const {x,y}=laser; if(laser.on){ xF.globalCompositeOperation='lighter'; const g=xF.createRadialGradient(x,y,0,x,y,R*1.6); g.addColorStop(0,'rgba(255,240,220,.9)'); g.addColorStop(.25,'rgba(255,120,50,.55)'); g.addColorStop(1,'rgba(255,60,20,0)'); xF.fillStyle=g; xF.beginPath(); xF.arc(x,y,R*1.6,0,6.29); xF.fill();
-          const s=(performance.now()/40)%2, px=x-R+(s<1?s:2-s)*2*R; xF.strokeStyle='rgba(255,220,190,.9)'; xF.lineWidth=2; xF.beginPath(); xF.moveTo(x-R,y); xF.lineTo(x+R,y); xF.stroke(); xF.fillStyle='#fff'; xF.beginPath(); xF.arc(px,y,2.6,0,6.29); xF.fill(); xF.globalCompositeOperation='source-over'; }
-        xF.strokeStyle='rgba(255,80,40,.9)'; xF.lineWidth=1.2; xF.setLineDash([3,4]); xF.beginPath(); xF.ellipse(x,y,R+8,(R+8)*.55,0,0,6.29); xF.stroke(); xF.setLineDash([]); xF.beginPath(); xF.moveTo(x-R-16,y); xF.lineTo(x-R-6,y); xF.moveTo(x+R+6,y); xF.lineTo(x+R+16,y); xF.stroke(); } }
-    requestAnimationFrame(frameD); }
-  function makeDemo(){ const x0=W*.6,x1=W*.86,rows=Math.ceil(H/(R*.9)),speed=Math.max(6,W/110); const pts=[]; for(let r=0;r<rows;r++){const y=R*.6+r*R*.9; pts.push(r%2?{x:x1,y}:{x:x0,y}, r%2?{x:x0,y}:{x:x1,y});} let seg=0,u=0;
-    return {path(){ if(seg>=pts.length-1) return null; const a=pts[seg],b=pts[seg+1],len=Math.hypot(b.x-a.x,b.y-a.y)||1; u+=speed/len; if(u>=1){u=0;seg++;return a;} return {x:a.x+(b.x-a.x)*u,y:a.y+(b.y-a.y)*u}; }}; }
-  function preStrip(){ last=null; for(let t=0;t<=1;t+=.004){ const x=W*(.1+.28*t), y=H*(-.05+1.1*t)+Math.sin(t*9)*H*.05; for(let k=-2;k<=2;k++) ablate(x+k*R*.7,y,1);} last=null; }
-  function setup(){ const r=door.getBoundingClientRect(); if(!r.width) return; const d=Math.min(2,devicePixelRatio||1); W=Math.round(r.width); H=Math.round(r.height); R=Math.max(16,Math.min(26,W/48));
-    for(const c of [cW,cP,cF]){ c.width=W*d; c.height=H*d; c.getContext('2d').setTransform(d,0,0,d,0,0);} seed=7; drawWood(); drawPaint(); preStrip(); measure(); demo=reduceMotion?null:makeDemo(); }
+  const door=$('door'), cP=$('cPaint'), cF=$('cFx'), xP=cP.getContext('2d'), xF=cF.getContext('2d');
+  const hint=$('hint'), pct=$('pct'), meter=$('meter'), done=$('done');
+  const paint=new Image(); paint.src='img/puerta-pintada.webp';
+  let W=0,H=0,R=26,last=null,parts=[],laser={x:-99,y:-99,on:false},touched=false,dirty=true,raf=0;
+  const smp=document.createElement('canvas'); smp.width=60; smp.height=80; const sx=smp.getContext('2d',{willReadFrequently:true});
+  function drawPaint(){ xP.globalCompositeOperation='source-over'; xP.clearRect(0,0,W,H); if(paint.complete&&paint.naturalWidth) xP.drawImage(paint,0,0,W,H); else {xP.fillStyle='#2F5A40'; xP.fillRect(0,0,W,H);} dirty=true; measure(); }
+  function setup(){ const r=door.getBoundingClientRect(); if(!r.width) return; const d=Math.min(2,devicePixelRatio||1); W=r.width; H=r.height; R=Math.max(18,Math.min(34,W/16));
+    for(const c of [cP,cF]){ c.width=Math.round(W*d); c.height=Math.round(H*d); c.getContext('2d').setTransform(d,0,0,d,0,0); } drawPaint();
+    if(!touched){ for(let t=0;t<=1;t+=.02){ const x=W*(.62+.22*t), y=H*(.18+.16*t); ablate(x,y,1); ablate(x,y+R*.5,1); } dirty=true; measure(); } }
+  function ablate(x,y,s){ xP.save(); xP.globalCompositeOperation='destination-out'; xP.translate(x,y); xP.scale(1,.6);
+    const g=xP.createRadialGradient(0,0,0,0,0,R); g.addColorStop(0,`rgba(0,0,0,${s})`); g.addColorStop(.6,`rgba(0,0,0,${s*.75})`); g.addColorStop(1,'rgba(0,0,0,0)');
+    xP.fillStyle=g; xP.beginPath(); xP.arc(0,0,R,0,6.29); xP.fill(); xP.restore(); dirty=true; }
+  function sparks(x,y,n){ if(reduceMotion) return; for(let i=0;i<n;i++){ const a=-Math.PI/2+(Math.random()-.5)*2.6, v=1.5+Math.random()*4.5; parts.push({x:x+(Math.random()-.5)*R,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.035+Math.random()*.05}); } if(parts.length>260) parts.splice(0,parts.length-260); }
+  function stroke(x,y){ if(last){ const dx=x-last.x,dy=y-last.y,dd=Math.hypot(dx,dy),st=Math.max(1,Math.ceil(dd/(R*.3))); for(let i=1;i<=st;i++) ablate(last.x+dx*i/st,last.y+dy*i/st,.7); sparks(x,y,Math.min(6,1+Math.floor(dd/6))); } else { ablate(x,y,.5); sparks(x,y,2); } last={x,y}; loop(); }
+  function measure(){ if(!dirty) return; dirty=false; sx.clearRect(0,0,60,80); sx.drawImage(cP,0,0,60,80); const d=sx.getImageData(0,0,60,80).data; let c=0; for(let i=3;i<d.length;i+=4) if(d[i]<90) c++;
+    const p=Math.round(c/(60*80)*100); pct.textContent=`${p}% decapado`; meter.style.width=p+'%'; done.classList.toggle('show',p>=70); }
+  function loop(){ if(raf) return; raf=requestAnimationFrame(tick); }
+  function tick(){ raf=0; xF.clearRect(0,0,W,H);
+    xF.globalCompositeOperation='lighter';
+    for(const p of parts){ p.x+=p.vx; p.y+=p.vy; p.vy+=.2; p.l-=p.d; xF.strokeStyle=`rgba(255,${150+(Math.random()*90|0)},60,${p.l})`; xF.lineWidth=1.5; xF.beginPath(); xF.moveTo(p.x,p.y); xF.lineTo(p.x-p.vx*1.8,p.y-p.vy*1.8); xF.stroke(); }
+    parts=parts.filter(p=>p.l>0);
+    if(laser.on){ const {x,y}=laser; const g=xF.createRadialGradient(x,y,0,x,y,R*1.3); g.addColorStop(0,'rgba(255,240,220,.9)'); g.addColorStop(.3,'rgba(255,110,50,.5)'); g.addColorStop(1,'rgba(255,60,20,0)'); xF.fillStyle=g; xF.beginPath(); xF.arc(x,y,R*1.3,0,6.29); xF.fill();
+      xF.strokeStyle='rgba(255,225,200,.95)'; xF.lineWidth=2; xF.beginPath(); xF.moveTo(x-R,y); xF.lineTo(x+R,y); xF.stroke(); }
+    xF.globalCompositeOperation='source-over';
+    if(parts.length||laser.on) loop(); }
   const pos=e=>{const r=door.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top};};
-  const take=()=>{ if(!laser.user){laser.user=true;demo=null;last=null;dh.classList.add('gone');} };
-  door.addEventListener('pointermove',e=>{const p=pos(e); if(e.pointerType==='mouse'){take();laser.x=p.x;laser.y=p.y;laser.on=true;stroke(p.x,p.y);} else if(laser.down){laser.x=p.x;laser.y=p.y;stroke(p.x,p.y);} });
-  door.addEventListener('pointerdown',e=>{take();const p=pos(e);laser.down=true;laser.on=true;laser.x=p.x;laser.y=p.y;last=null;stroke(p.x,p.y);});
-  const stop=()=>{laser.down=false; if(laser.user){laser.on=false;laser.x=-99;} last=null;};
+  function first(){ if(!touched){ touched=true; hint.classList.add('gone'); } }
+  door.addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'||laser.down){ first(); const p=pos(e); laser.x=p.x; laser.y=p.y; laser.on=true; stroke(p.x,p.y); } });
+  door.addEventListener('pointerdown',e=>{ first(); laser.down=true; const p=pos(e); laser.on=true; last=null; stroke(p.x,p.y); });
+  const stop=()=>{ laser.down=false; laser.on=false; last=null; loop(); };
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>door.addEventListener(ev,stop));
-  $('repaint').addEventListener('click',()=>{seed=19+Math.floor(Math.random()*999); drawPaint(); measure();});
-  if(matchMedia('(hover:none)').matches) $('dhint-txt').textContent='Deslizá el dedo de costado';
-  new IntersectionObserver(es=>{ visible=es[0].isIntersecting; },{rootMargin:'100px'}).observe(door);
-  let rw=0; new ResizeObserver(en=>{const w=en[0].contentRect.width; if(Math.abs(w-rw)>30){rw=w;setup();}}).observe(door);
-  setInterval(measure,400); requestAnimationFrame(frameD);
+  $('repaint').addEventListener('click',drawPaint);
+  if(matchMedia('(hover:none)').matches) $('hintTxt').textContent='Deslizá el dedo de costado';
+  paint.onload=setup; new ResizeObserver(setup).observe(door); setInterval(measure,300);
 })();
 
-/* ===== Comparativa ===== */
-(()=>{ const svg=$('xsec'), cap=$('xcap'), lab=$('xs-label'), sub=$('xs-sub');
-  const T={lija:{l:'Superficie original: se perdió ≈ 1 mm',s:'La lija no distingue pintura de madera',c:'<b>Lija:</b> saca la pintura y también la capa de arriba de la madera. Se redondean aristas, se borran tallas y queda polvo de pintura vieja en todo el ambiente.'},
-    quim:{l:'Superficie original: embebida',s:'Queda barro químico y la fibra levantada',c:'<b>Removedor:</b> ablanda la pintura, pero penetra en la madera, oscurece la superficie y deja residuos que hay que raspar, lavar y neutralizar.'},
-    laser:{l:'Superficie original: intacta',s:'El láser se detiene donde termina la pintura',c:'<b>Láser:</b> la pintura absorbe la energía del pulso y se vaporiza. La madera devuelve más energía de la que absorbe, así que queda como estaba.'}};
-  function set(m){ svg.classList.remove('m-lija','m-quim','m-laser'); svg.classList.add('m-'+m); lab.textContent=T[m].l; sub.textContent=T[m].s; cap.innerHTML=T[m].c;
-    document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m)); document.querySelectorAll('#facts [data-c]').forEach(td=>td.classList.toggle('on',td.dataset.c===m)); }
-  document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>set(b.dataset.m))); set('laser'); })();
-
-/* ===== Patrones de barrido + pasos ===== */
-(()=>{ const cv=$('scope'), x=cv.getContext('2d'), nm=$('sc-name'), tx=$('sc-txt');
-  const P={linea:{n:'Línea',d:'<b>Línea:</b> el barrido básico. Para tablas lisas, puertas placa y pisos.',f:t=>{const u=(t*6)%2; return [-.8+1.6*(u<1?u:2-u),0];},wide:1},
-    rect:{n:'Rectángulo',d:'<b>Rectángulo:</b> cubre un área pareja sin dejar franjas. Para paños grandes.',f:t=>{const rows=8,r=Math.floor(t*rows),u=(t*rows)%1; return [r%2?.8-1.6*u:-.8+1.6*u,-.6+1.2*r/(rows-1)];},wide:1},
-    circ:{n:'Círculo',d:'<b>Círculo:</b> concentra el haz en un punto. Ideal para la prueba en una zona oculta.',f:t=>[Math.cos(t*6.283*3)*.55,Math.sin(t*6.283*3)*.55]},
-    seno:{n:'Senoidal',d:'<b>Senoidal:</b> barrido suave que reparte el calor. Para maderas blandas y chapas finas.',f:t=>[-.85+1.7*t,Math.sin(t*6.283*4)*.45],wide:1},
-    espiral:{n:'Espiral',d:'<b>Espiral:</b> entra en curvas y relieves. Para tallas, torneados y molduras.',f:t=>{const r=.08+.62*t; return [Math.cos(t*6.283*7)*r,Math.sin(t*6.283*7)*r];}}};
-  let cur='linea', t0=performance.now(), trail=[], w=0, h=0, vis=false;
-  function size(){const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1); w=r.width; h=r.height; cv.width=w*d; cv.height=h*d; x.setTransform(d,0,0,d,0,0);}
-  const map=([u,v])=>{const s=Math.min(w,h)*.5; return [w/2+u*(P[cur].wide?w*.5:s), h/2+v*s];};
-  function guide(){ x.fillStyle='#050806'; x.fillRect(0,0,w,h); x.strokeStyle='rgba(120,150,130,.10)'; x.lineWidth=1; for(let i=0;i<w;i+=24){x.beginPath();x.moveTo(i+.5,0);x.lineTo(i+.5,h);x.stroke();} for(let j=0;j<h;j+=24){x.beginPath();x.moveTo(0,j+.5);x.lineTo(w,j+.5);x.stroke();}
-    x.strokeStyle='rgba(255,59,36,.2)'; x.setLineDash([3,5]); x.beginPath(); for(let t=0;t<=1;t+=.002){const [a,b]=map(P[cur].f(t)); t?x.lineTo(a,b):x.moveTo(a,b);} x.stroke(); x.setLineDash([]); }
-  function draw(now){ if(vis){ guide();
-      if(!reduceMotion){ const t=((now-t0)/5200)%1; trail.push(map(P[cur].f(t))); if(trail.length>90) trail.shift();
-        for(let i=1;i<trail.length;i++){x.strokeStyle=`rgba(255,${60+i},36,${i/trail.length})`; x.lineWidth=1+2.5*i/trail.length; x.beginPath(); x.moveTo(...trail[i-1]); x.lineTo(...trail[i]); x.stroke();}
-        const hd=trail[trail.length-1]; const g=x.createRadialGradient(hd[0],hd[1],0,hd[0],hd[1],14); g.addColorStop(0,'rgba(255,240,220,1)'); g.addColorStop(1,'rgba(255,59,36,0)'); x.fillStyle=g; x.beginPath(); x.arc(hd[0],hd[1],14,0,6.29); x.fill(); }
-      else { x.strokeStyle='#FF3B24'; x.lineWidth=2; x.beginPath(); for(let t=0;t<=1;t+=.002){const [a,b]=map(P[cur].f(t)); t?x.lineTo(a,b):x.moveTo(a,b);} x.stroke(); } }
-    requestAnimationFrame(draw); }
-  function set(p){ if(p===cur && trail.length) return; cur=p; trail=[]; t0=performance.now(); nm.textContent=P[p].n; tx.innerHTML=P[p].d; document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===p)); }
-  document.querySelectorAll('.modes button').forEach(b=>b.addEventListener('click',()=>set(b.dataset.p)));
-  new ResizeObserver(size).observe(cv); new IntersectionObserver(es=>{vis=es[0].isIntersecting;}).observe(cv);
-  const steps=[...document.querySelectorAll('#steps li')];
-  const sio=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ steps.forEach(s=>s.classList.toggle('on',s===e.target)); set(e.target.dataset.p); } }),{rootMargin:'-45% 0px -45% 0px'});
-  steps.forEach(s=>sio.observe(s));
-  size(); cur=''; set('linea'); requestAnimationFrame(draw);
-})();
-</script>
-<script>
-/* ===== Cotizador ===== */
+/* Cotizador */
 (()=>{
-  const TIPOS={puerta:{l:'Puerta',ancho:80,alto:205,caras:2,help:'Una puerta estándar mide 80 × 205 cm: 1,6 m² por cara.'},
-    abertura:{l:'Ventana o postigo',ancho:120,alto:150,caras:2,help:'Medí el marco por fuera. En celosías, el detalle va en "Con molduras".'},
-    mueble:{l:'Mueble',ancho:120,alto:90,caras:1,help:'Medí el frente. Si van laterales o tapa, sumalos como otra pieza.'},
-    escalera:{l:'Escalera o baranda',ancho:90,alto:350,caras:1,help:'Ancho del escalón por el largo total de la escalera.'},
-    piso:{l:'Piso o deck',m2:20,help:'Poné los metros cuadrados del ambiente.'},
+  const TIPOS={puerta:{l:'Puerta',ancho:80,alto:205,caras:2,help:'Una puerta estándar mide 80 × 205 cm.'},
+    abertura:{l:'Ventana o postigo',ancho:120,alto:150,caras:2,help:'Medí el marco por fuera.'},
+    mueble:{l:'Mueble',ancho:120,alto:90,caras:1,help:'Medí el frente. Laterales o tapa, sumalos aparte.'},
+    escalera:{l:'Escalera o baranda',ancho:90,alto:350,caras:1,help:'Ancho del escalón por el largo total.'},
+    piso:{l:'Piso',m2:20,help:'Metros cuadrados del ambiente.'},
     viga:{l:'Vigas o techo',m2:8,help:'Sumá las caras que quedan a la vista.'},
-    otro:{l:'Otra pieza',ancho:100,alto:100,caras:1,help:'Una medida aproximada alcanza. Lo ajustamos con las fotos.'}};
+    otro:{l:'Otra pieza',ancho:100,alto:100,caras:1,help:'Una medida aproximada alcanza.'}};
   const REC={latex:{l:'Látex o pintura al agua',p:2.2},esmalte:{l:'Esmalte sintético',p:1.6},barniz:{l:'Barniz o laca vieja',p:1.3},pu:{l:'Poliuretano o plastificado',p:.6,prueba:true},nose:{l:'No sé',p:1.3,prueba:true}};
   const DET={liso:{l:'Lisa',f:1},mold:{l:'Con molduras',f:.7},tall:{l:'Tallada o torneada',f:.45}};
-  const LUGAR={taller:{l:'En el taller de Olivos'},casa:{l:'A domicilio'}};
+  const LUGAR={taller:{l:'Llevo la pieza al taller'},casa:{l:'A domicilio'}};
   const money=new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
   const S={tipo:'puerta',rec:'esmalte',det:'mold',lugar:'taller'};
   function chips(el,name,obj,key){ el.innerHTML=Object.entries(obj).map(([k,v])=>`<label><input type="radio" name="${name}" id="${name}-${k}" value="${k}" ${S[key]===k?'checked':''}><span>${v.l}</span></label>`).join(''); el.addEventListener('change',e=>{S[key]=e.target.value; if(key==='tipo') applyTipo(); render();}); }
   chips($('q-tipo'),'tipo',TIPOS,'tipo'); chips($('q-rec'),'rec',REC,'rec'); chips($('q-det'),'det',DET,'det'); chips($('q-lugar'),'lugar',LUGAR,'lugar');
-  $('q-zona').innerHTML=ZONAS.map(z=>`<option value="${z.id}">${z.label}</option>`).join('');
-  $('zones').innerHTML=`<div><span>Taller en Olivos</span><span>sin cargo</span></div>`+ZONAS.filter(z=>z.costo!=null).map(z=>`<div><span>${z.label}</span><span>traslado ${money.format(z.costo)}</span></div>`).join('')+`<div><span>Otras zonas</span><span>a consultar</span></div>`;
-  $('t-date').textContent=new Date().toLocaleDateString('es-AR');
-  function applyTipo(){ const t=TIPOS[S.tipo], isM2=t.m2!=null; $('fs-medidas').hidden=isM2; $('fs-m2').hidden=!isM2; if(isM2) $('q-m2').value=t.m2; else {$('q-ancho').value=t.ancho;$('q-alto').value=t.alto;$('q-caras').value=t.caras;$('q-cant').value=1;} $('q-tipo-help').textContent=t.help; }
+  $('q-zona').innerHTML=ZONAS.map(z=>`<option value="${z.id}">${z.label}${z.costo?' · traslado '+money.format(z.costo):''}</option>`).join('');
+  function applyTipo(){ const t=TIPOS[S.tipo], m=t.m2!=null; $('fs-medidas').hidden=m; $('fs-m2').hidden=!m; if(m) $('q-m2').value=t.m2; else {$('q-ancho').value=t.ancho;$('q-alto').value=t.alto;$('q-caras').value=t.caras;$('q-cant').value=1;} $('q-tipo-help').textContent=t.help; }
   const num=(id,def)=>{const v=parseFloat(String($(id).value).replace(',','.')); return isFinite(v)&&v>0?v:def;};
   function calc(){ const t=TIPOS[S.tipo]; let m2,desc;
-    if(t.m2!=null){m2=num('q-m2',0);desc=t.l;} else {const a=num('q-ancho',0),h=num('q-alto',0),c=+$('q-caras').value,n=Math.round(num('q-cant',1)); m2=a*h/1e4*c*n; desc=`${t.l}${n>1?' ×'+n:''} · ${a}×${h} cm · ${c} ${c>1?'caras':'cara'}`;}
+    if(t.m2!=null){m2=num('q-m2',0);desc=t.l;} else {const a=num('q-ancho',0),h=num('q-alto',0),c=+$('q-caras').value,n=Math.round(num('q-cant',1)); m2=a*h/1e4*c*n; desc=`${t.l}${n>1?' ×'+n:''} · ${a}×${h} cm`;}
     const capas=+$('q-capas').value, r=REC[S.rec], d=DET[S.det], prod=r.p*d.f/(1+.35*(capas-1)), horas=CONFIG.preparacion+(m2>0?m2/prod:0);
     const zona=ZONAS.find(z=>z.id===$('q-zona').value), tras=S.lugar==='casa'?zona.costo:0, r5=v=>Math.round(v/5000)*5000;
-    const minimo=CONFIG.minimoHoras*CONFIG.tarifaHora, alMinimo=horas<=CONFIG.minimoHoras;
-    let lo,hi;
-    if(alMinimo){ lo=hi=r5(minimo+(tras||0)); }
-    else { const base=horas*CONFIG.tarifaHora; lo=r5(Math.max(minimo,base*(1-CONFIG.margenBajo))+(tras||0)); hi=r5(base*(1+CONFIG.margenAlto)+(tras||0)); }
-    return {m2,desc,capas,r,d,horas,zona,tras,lo,hi,alMinimo}; }
+    const minimo=CONFIG.minimoHoras*CONFIG.tarifaHora, alMin=horas<=CONFIG.minimoHoras; let lo,hi;
+    if(alMin){lo=hi=r5(minimo+(tras||0));} else {const b=horas*CONFIG.tarifaHora; lo=r5(Math.max(minimo,b*(1-CONFIG.margenBajo))+(tras||0)); hi=r5(b*(1+CONFIG.margenAlto)+(tras||0));}
+    return {m2,desc,capas,r,d,horas,zona,tras,lo,hi,alMin}; }
   const hfmt=h=>{const q=Math.max(1,Math.round(h*4)),hh=Math.floor(q/4),mm=(q%4)*15; return hh?`${hh} h${mm?' '+mm+' min':''}`:`${mm} min`;};
+  const rangeTxt=c=>c.lo===c.hi?money.format(c.lo):`${money.format(c.lo)} – ${money.format(c.hi)}`;
   function render(){ $('q-capas-val').textContent=$('q-capas').value==='6'?'6+':$('q-capas').value; $('f-zona').hidden=S.lugar!=='casa'; const c=calc();
-    $('t-range').textContent=c.m2>0?(c.lo===c.hi?money.format(c.lo):`${money.format(c.lo)} – ${money.format(c.hi)}`):'Completá las medidas'; $('t-pieza').textContent=c.desc; $('t-m2').textContent=`${fmtNum(c.m2,1)} m²`; $('t-horas').textContent=hfmt(c.horas);
+    $('t-range').textContent=c.m2>0?rangeTxt(c):'Completá las medidas'; $('t-pieza').textContent=c.desc; $('t-m2').textContent=`${fmtNum(c.m2)} m²`; $('t-horas').textContent=hfmt(c.horas);
     $('t-tras').textContent=S.lugar==='taller'?'Sin cargo':(c.tras==null?'A confirmar':money.format(c.tras));
-    const q=Math.round(c.horas*4),cells=Math.min(q,64); $('t-cells').innerHTML=Array.from({length:cells},(_,i)=>`<i class="${i<2?'half':''}"></i>`).join('')+(q>64?`<span class="fine">+${hfmt((q-64)/4)}</span>`:'');
-    const flags=[]; if(c.alMinimo && c.m2>0) flags.push(`Este trabajo entra en el mínimo de ${CONFIG.minimoHoras} horas de láser (${money.format(CONFIG.minimoHoras*CONFIG.tarifaHora)}). Si tenés otra pieza, la sumamos en la misma visita.`);
-    if(c.r.prueba) flags.push(S.rec==='pu'?'El poliuretano a veces se resiste al láser. Antes de confirmar hacemos una prueba en una zona oculta.':'Si no sabés qué pintura tiene, hacemos una prueba en una zona oculta y ajustamos el precio.');
-    if(c.capas>=5) flags.push('Con tantas manos el láser trabaja de a capas: el rango puede estirarse.'); if(S.lugar==='casa'&&c.tras==null) flags.push('El traslado a tu zona lo confirmamos por WhatsApp.');
-    $('t-flag').innerHTML=flags.map(f=>`<span>${f}</span>`).join(''); $('t-flag').classList.toggle('show',flags.length>0);
+    const f=[]; if(c.alMin&&c.m2>0) f.push(`Entra en el trabajo mínimo de ${CONFIG.minimoHoras} horas. Si tenés otra pieza, la sumamos en la misma visita.`);
+    if(c.r.prueba) f.push('Con este recubrimiento hacemos una prueba en una zona oculta antes de confirmar el precio.');
+    if(S.lugar==='casa'&&c.tras==null) f.push('El traslado a tu zona lo confirmamos por WhatsApp.');
+    $('t-flag').innerHTML=f.map(x=>`<span>${x}</span>`).join(''); $('t-flag').classList.toggle('show',f.length>0);
     $('q-wa').href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message(c))}`; }
-  function message(c){ const nombre=$('q-nombre').value.trim(); return [`Hola Eduardo${nombre?', soy '+nombre:''}. Quiero cotizar un decapado láser.`,`• Pieza: ${c.desc} (${fmtNum(c.m2,1)} m²)`,`• Recubrimiento: ${c.r.l}, ${$('q-capas').value==='6'?'6 o más':$('q-capas').value} manos`,`• Superficie: ${c.d.l}`,`• Lugar: ${S.lugar==='taller'?'Llevo la pieza al taller':'A domicilio, '+c.zona.label}`,`• Estimado de la web: ${c.lo===c.hi?money.format(c.lo)+' (mínimo de '+CONFIG.minimoHoras+' h)':money.format(c.lo)+' – '+money.format(c.hi)}`,`Te mando fotos por acá.`].join('\n'); }
+  function message(c){ const n=$('q-nombre').value.trim(); return [`Hola Eduardo${n?', soy '+n:''}. Quiero cotizar un decapado láser.`,`• Pieza: ${c.desc} (${fmtNum(c.m2)} m²)`,`• Recubrimiento: ${c.r.l}, ${$('q-capas').value==='6'?'6 o más':$('q-capas').value} manos`,`• Superficie: ${c.d.l}`,`• Lugar: ${S.lugar==='taller'?'Llevo la pieza al taller':'A domicilio, '+c.zona.label}`,`• Estimado de la web: ${rangeTxt(c)}`,`Te mando fotos por acá.`].join('\n'); }
   ['q-ancho','q-alto','q-caras','q-cant','q-m2','q-capas','q-zona','q-nombre'].forEach(id=>$(id).addEventListener('input',render));
   $('qform').addEventListener('submit',e=>e.preventDefault());
-  $('q-copy').addEventListener('click',()=>{ const txt=message(calc()), ok=()=>{$('q-copied').textContent='Copiado. Pegalo en WhatsApp o en un mail.';};
-    const fb=()=>{const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); ok();}catch(_){$('q-copied').textContent='No se pudo copiar. Seleccioná el texto a mano.';} ta.remove();};
+  $('q-copy').addEventListener('click',()=>{ const txt=message(calc()), ok=()=>{$('q-copied').textContent='Copiado. Pegalo en WhatsApp.';};
+    const fb=()=>{const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); ok();}catch(_){$('q-copied').textContent='No se pudo copiar.';} ta.remove();};
     try{navigator.clipboard.writeText(txt).then(ok).catch(fb);}catch(_){fb();} });
   applyTipo(); render();
 })();
